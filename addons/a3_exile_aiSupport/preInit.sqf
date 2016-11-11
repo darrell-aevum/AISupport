@@ -1,5 +1,5 @@
 	diag_log format ["[AI SUPPORT] :: Starting AI Support"]; 
-	AISupport_DEBUG = true;
+	AISupport_DEBUG = !isServer;
     AISupport_HQCallSign = "Zues 7";
 	AISupport_ActiveFireTeams = [];
 	AISupport_ActiveAirInsertionTeams = [];
