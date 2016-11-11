@@ -2,16 +2,35 @@ params ["_delay"];
  
 while{true} do
 {  
+ 
 	if(isDedicated) then {
- 		if(isNil "ExileClientLoadedIn")
-			exitWith{};
-	};	
+ 		waitUntil{!isNil "ExileClientLoadedIn"};
+		UISleep 0.1;
+		waitUntil{ExileClientLoadedIn};
+		UISleep 0.1;
+		waitUntil{alive player};
+		UISleep 0.1;
+		waitUntil{!ExileClientPlayerIsBambi};
+		UISleep 0.1;
+	};
+	  
+	_playerActions = player getVariable ["actions", []]; 
 
 	if(!alive player) 
-		exitWith{}; 
-		 
-	_playerActions = player getVariable ["actions", []]; 
-	
+		exitWith{
+ 			{
+				player removeAction _x;
+			} foreach _playerActions;		
+		}; 
+
+	if(count _playerActions <= 0) then {
+		{ 
+			_playerAction = player addAction (_x select 0);
+			_playerActions pushBack _playerAction;
+		} foreach AISupport_Player_Actions; 
+		player setVariable ["actions", _playerActions]; 	 	
+	};
+
 	{
 		_action = _x select 0;
 		_actionText = _action select 0;
@@ -21,13 +40,9 @@ while{true} do
 		_minRespect = _x select 2;
  		_requiredItems = _x select 3;
 
-
-		_playerTabs = player getVariable ["ExileLocker", 0];
-		_playerRespect =  player getVariable ["Score", 0]; 
-	    player setVariable ["ExileLocker", _playerTabs + 2500];
-	    player setVariable ["Score", _playerRespect + 200]; 
-		_playerTabs = player getVariable ["ExileLocker", 0];
-		_playerRespect =  player getVariable ["Score", 0]; 
+		_playerTabs = 100000;// player getVariable ["ExileLocker", 0];
+		_playerRespect =  100000; // player getVariable ["Score", 0]; 
+ 
 		_playerAction = _playerActions select _forEachIndex;
 		
 		_text = "";

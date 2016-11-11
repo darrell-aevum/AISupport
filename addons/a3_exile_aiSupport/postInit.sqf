@@ -27,46 +27,13 @@ diag_log format ["[AI SUPPORT] :: Post Init"];
 		 	
 	];
  
+  	AISupport_Player_Actions = [
+		[["Request Air Support", {call AISupport_fnc_RequestAirSupport}], 5000, 100],
+		[["Request Fire Mission", {call AISupport_fnc_RequestFireMission}], 5000, 100],
+		[["Request Reinforcements", {[["SmokeShell"]] spawn AISupport_fnc_RequestReinforcements}], 5000, 100, ["SmokeShell"]]
+	];
+
+
 	[10] spawn AISupport_fnc_UnitMonitor;
-
+	[5] spawn AISupport_fnc_PlayerMonitor;
  
-[] spawn {
-	while {true} do {
-		if(isDedicated) then {
- 			waitUntil{!isNil "ExileClientLoadedIn"};
-			UISleep 0.1;
-			waitUntil{ExileClientLoadedIn};
-			UISleep 0.1;
-			waitUntil{alive player};
-			UISleep 0.1;
-			waitUntil{!ExileClientPlayerIsBambi};
-			UISleep 0.1;
-		};
-	
-		_playerActions = player setVariable ["actions", []];
-		player setVariable ["ActiveSupportUnits", []];
-
-		//[name, action, minCost, minRespect]
- 		AISupport_Player_Actions = [
-			[["Request Air Support", {call AISupport_fnc_RequestAirSupport}], 5000, 100],
-			[["Request Fire Mission", {call AISupport_fnc_RequestFireMission}], 5000, 100],
-			[["Request Reinforcements", {[["SmokeShell"]] spawn AISupport_fnc_RequestReinforcements}], 5000, 100, ["SmokeShell"]]
-		];
-
-		_playerActions = player getVariable ["actions", []]; 
-
-		{ 
-			_playerAction = player addAction (_x select 0);
-			_playerActions pushBack _playerAction;  
-
-		} foreach AISupport_Player_Actions; 
-
-		[3] spawn AISupport_fnc_PlayerMonitor;
-		 
-		waitUntil{!alive player};
-
- 		{
-			player removeAction _x;
-		} foreach _playerActions;
-	};
-};
