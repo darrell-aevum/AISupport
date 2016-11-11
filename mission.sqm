@@ -8,22 +8,22 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=1045;
+		nextID=1058;
 	};
 	class MarkerIDProvider
 	{
-		nextID=5;
+		nextID=7;
 	};
 	class LayerIndexProvider
 	{
-		nextID=477;
+		nextID=589;
 	};
 	class Camera
 	{
-		pos[]={9298.3408,630.51587,9734.707};
-		dir[]={-0.11378817,-0.90991277,0.39889961};
-		up[]={-0.24960308,0.41477683,0.87501895};
-		aside[]={0.96164435,-3.0035153e-008,0.2743139};
+		pos[]={5385.2979,344.33649,8738.8916};
+		dir[]={0,-0.70710677,0.70710683};
+		up[]={0,0.70710677,0.70710671};
+		aside[]={0.99999994,0,-0};
 	};
 };
 binarizationWanted=0;
@@ -34,13 +34,14 @@ addons[]=
 	"A3_Weapons_F_Mark_LongRangeRifles_DMR_06",
 	"A3_Weapons_F_Mark_Acc",
 	"A3_Weapons_F",
-	"A3_Weapons_F_Items"
+	"A3_Weapons_F_Items",
+	"A3_Ui_F"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=4;
+		items=5;
 		class Item0
 		{
 			className="A3_Characters_F";
@@ -66,6 +67,13 @@ class AddonsMetaData
 		{
 			className="A3_Weapons_F";
 			name="Arma 3 Alpha - Weapons and Accessories";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item4
+		{
+			className="A3_Ui_F";
+			name="Arma 3 - User Interface";
 			author="Bohemia Interactive";
 			url="http://www.arma3.com";
 		};
@@ -353,7 +361,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=16;
+		items=18;
 		class Item0
 		{
 			dataType="Layer";
@@ -659,7 +667,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8921.0303,38.300667,9964.2871};
+						position[]={5287.8774,10.23744,9022.0898};
 					};
 					side="West";
 					flags=7;
@@ -750,6 +758,24 @@ class Mission
 			{
 			};
 			id=1007;
+		};
+		class Item16
+		{
+			dataType="Marker";
+			position[]={9932.834,109.82639,9522.5859};
+			name="marker_6";
+			type="n_art";
+			id=1056;
+			atlOffset=-1.3826752;
+		};
+		class Item17
+		{
+			dataType="Marker";
+			position[]={5325.7891,11.606049,9062.6865};
+			name="marker_7";
+			type="n_art";
+			id=1057;
+			atlOffset=-1.3930473;
 		};
 	};
 };
