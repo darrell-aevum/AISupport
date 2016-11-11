@@ -1,6 +1,6 @@
 	diag_log format ["[AI SUPPORT] :: Starting AI Support"]; 
 	AISupport_DEBUG = true;
- 
+    AISupport_HQCallSign = "Zues 7";
 	AISupport_ActiveFireTeams = [];
 	AISupport_ActiveAirInsertionTeams = [];
 	AISupport_ActiveAirSupportUnits = [];
@@ -26,7 +26,9 @@
 	AISupport_Reinforcements_GroundTroops_MinDistFromDrop = 5;
 	AISupport_Reinforcements_GroundTroops_MaxDistFromDrop	= 5;
 
+	call AISupport_fnc_Messages;
 	call AISupport_fnc_Helpers;
+	
 
 
 

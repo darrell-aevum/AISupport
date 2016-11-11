@@ -11,8 +11,9 @@ diag_log format ["[AI SUPPORT] :: Post Init"];
 	[] execVM "addons\a3_exile_aiSupport\bases\firebase_b.sqf";		
 
 	AISupport_InactiveFireTeams = [
+		call (compile loadFile "addons\a3_exile_aiSupport\fireTeams\mlrs_1.sqf"),
 		call (compile loadFile "addons\a3_exile_aiSupport\fireTeams\mortars_1.sqf"),
-		call (compile loadFile "addons\a3_exile_aiSupport\fireTeams\mortars_2.sqf")
+ 		call (compile loadFile "addons\a3_exile_aiSupport\fireTeams\mortars_2.sqf")
 	];
 	AISupport_InactiveAirInsertionTeams = [
 	   call (compile loadFile "addons\a3_exile_aiSupport\vehicles\reinforcement_heli_1.sqf")

@@ -135,8 +135,8 @@ _turrets = [
 ];   
 
 _base = [  
-	_objects//, 
-//	[
-//		[_turrets, _group]
-//	]
+	_objects, 
+	[
+		[_turrets, _group]
+	]
 ] call AISupport_fnc_AddBase; 

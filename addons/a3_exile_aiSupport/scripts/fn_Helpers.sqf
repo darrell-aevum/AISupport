@@ -30,3 +30,20 @@ IsItemInInventory = {
 	}; 	  
 	_hasItem
 };
+
+GetClosestAvailableFireTeam = {
+	params ["_position"];
+		
+	private _closestFireTeam = nil;
+	_closestDistance = 99999;
+	{
+	    _unit = (_x select 1) select 0;
+		_distance = _unit distance2D _position;  
+		if(_distance < _closestDistance) then {
+			_closestFireTeam = _x;
+			_closestDistance = _distance;
+		};
+		
+	}foreach AISupport_InactiveFireTeams; 
+	_closestFireTeam
+}

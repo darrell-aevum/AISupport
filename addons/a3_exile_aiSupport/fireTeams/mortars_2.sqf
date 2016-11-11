@@ -1,6 +1,6 @@
 private _fireTeam = [];
 _group = createGroup RESISTANCE; 
-_group setCombatMode "RED"; 	
+_group setCombatMode "BLUE"; 	
 
 _mortars = [ 
 	["B_T_Mortar_01_F",[5299.71,8960.83,6.79197],[[0,0.997023,0.0771034],[-0.0080009,-0.0771009,0.996991]],false],
@@ -10,6 +10,6 @@ _mortars = [
 ];
 
  _units = [_mortars, _group] call AISupport_fnc_AddStaticWeapon;  
-_fireTeam =	[_mortars, _units, _group, "fireTeam", "Fire Team Echo"];
+_fireTeam =	[_mortars, _units, _group, "8Rnd_82mm_Mo_shells", "Fire Team Mike", 3];
 
 _fireTeam
