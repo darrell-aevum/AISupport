@@ -1,6 +1,6 @@
 diag_log format ["[AI SUPPORT] :: Post Init"]; 
 
-	if(!AISupport_DEBUG) then {
+	if(isDedicated) then {
 		waitUntil{!isNil "ExileClientLoadedIn"};
 		UISleep 0.1;
 		waitUntil{ExileClientLoadedIn};
@@ -32,7 +32,7 @@ diag_log format ["[AI SUPPORT] :: Post Init"];
  
 [] spawn {
 	while {true} do {
-		if(!AISupport_DEBUG) then {
+		if(isDedicated) then {
  			waitUntil{!isNil "ExileClientLoadedIn"};
 			UISleep 0.1;
 			waitUntil{ExileClientLoadedIn};

@@ -5,7 +5,7 @@ AISupport_Message_FireSupport_Request = {
 	_message1 = format ["[%1] %2... %2...", (name player), AISupport_HQCallSign];
 	_message2 = format ["[%1] This is %1.", (name player)];
 	_message3 = format ["[%1] Requesting fire mission on my target. Over.", (name player)];
-	if!(AISupport_DEBUG) then {
+	if(isDedicated) then {
 		["systemChatRequest", [_message1]] call ExileServer_system_network_send_broadcast; 
 		sleep 1;
 		["systemChatRequest", [_message2]] call ExileServer_system_network_send_broadcast; 
@@ -29,7 +29,7 @@ AISupport_Message_FireSupport_NoAvailableTeams = {
 	_message1 = Format["[%1] %2...", AISupport_HQCallSign, name player];
 	_message2 = format ["[%1] We cannot fire on your target at this time. Out.", AISupport_HQCallSign]; 
 
-	if!(AISupport_DEBUG) then {
+	if(isDedicated) then {
 		["systemChatRequest", [_message1]] call ExileServer_system_network_send_broadcast; 
 		sleep 1;
 		["systemChatRequest", [_message2]] call ExileServer_system_network_send_broadcast;  
@@ -47,7 +47,7 @@ AISupport_Message_FireSupport_GetCoordinates = {
 	_message1 = format ["[%1] Roger %2... This is %1.", AISupport_HQCallSign, (name player)];
 	_message2 = format ["[%1] What are the target's coordinates? Over.", AISupport_HQCallSign];
 
-	if!(AISupport_DEBUG) then {
+	if(isDedicated) then {
 		["systemChatRequest", [_message1]] call ExileServer_system_network_send_broadcast; 
 		sleep 1;
 		["systemChatRequest", [_message2]] call ExileServer_system_network_send_broadcast;  
@@ -66,7 +66,7 @@ AISupport_Message_FireSupport_SendCoordinates = {
 	params["_position"];	
 	_message1 = format ["[%1] %2, the target's position is: %3", (name player), AISupport_HQCallSign, _position];	
 
-	if!(AISupport_DEBUG) then {
+	if(isDedicated) then {
 		["systemChatRequest", [_message1]] call ExileServer_system_network_send_broadcast; 		
 	}
 	else {
@@ -78,7 +78,7 @@ AISupport_Message_FireSupport_SendCoordinates = {
 AISupport_Message_FireSupport_FiringOnSupportBase = {
 	_message1 = format["[%1] Negative %2. We cannot fire that close to an AI Support base. Out.", AISupport_HQCallSign, (group player)];
 
-	if!(AISupport_DEBUG) then {
+	if(isDedicated) then {
 		["systemChatRequest", [_message1]] call ExileServer_system_network_send_broadcast; 		
 	}
 	else {
@@ -91,7 +91,7 @@ AISupport_Message_FireSupport_OutOfRange = {
 	_message1 = format ["[%1] %2...", AISupport_HQCallSign, (name player)];
 	_message2 = format ["[%1] Your target is out of range of all available firebases. Out.", AISupport_HQCallSign];
 
-	if!(AISupport_DEBUG) then {
+	if(isDedicated) then {
 		["systemChatRequest", [_message1]] call ExileServer_system_network_send_broadcast; 
 		sleep 1;
 		["systemChatRequest", [_message2]] call ExileServer_system_network_send_broadcast;  
@@ -111,7 +111,7 @@ AISupport_Message_FireSupport_Firing = {
 	_message2 = format ["[%2] %3, this is %2 ETA to target is %1 seconds. Over.", (round _eta), _fireTeamCallSign, (name player)];
 	_message3 = format ["[%3] Roger %2. Out.", _eta, _fireTeamCallSign, (name player)];
 
-	if!(AISupport_DEBUG) then {
+	if(isDedicated) then {
 		["systemChatRequest", [_message1]] call ExileServer_system_network_send_broadcast; 
 		sleep 4;
 		["systemChatRequest", [_message2]] call ExileServer_system_network_send_broadcast;  

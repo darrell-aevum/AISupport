@@ -2,7 +2,7 @@ params ["_delay"];
  
 while{true} do
 {  
-	if(!AISupport_DEBUG) then {
+	if(isDedicated) then {
  		if(isNil "ExileClientLoadedIn")
 			exitWith{};
 	};	
