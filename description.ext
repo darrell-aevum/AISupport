@@ -1,14 +1,7 @@
 class CfgFunctions
 { 
 	#include "addons\a3_exile_aiSupport\CfgFunctions.cpp"
-	class SA
-	{
-		class AdvancedRappelling
-		{
-			file = "addons\AR_AdvancedRappelling\functions";
-			class advancedRappellingInit{postInit=1};
-		};
-	};
+	#include "addons\AR_AdvancedRappelling\CfgFunctions.cpp" 
 }; 
 
 class CfgPatches
@@ -22,8 +15,7 @@ class CfgPatches
 };
 
 class CfgNetworkMessages
-{
-	
+{ 
 	class AdvancedRappellingRemoteExecClient
 	{
 		module = "AdvancedRappelling";
@@ -34,8 +26,7 @@ class CfgNetworkMessages
 	{
 		module = "AdvancedRappelling";
 		parameters[] = {"ARRAY","STRING","BOOL"};
-	};
-	
+	}; 
 }; 
 
 class CfgSounds
@@ -43,19 +34,19 @@ class CfgSounds
 	class AR_Rappel_Loop
 	{
 		name = "AR_Rappel_Loop";
-		sound[] = {"addonsaddons\AR_AdvancedRappelling\sounds\AR_Rappel_Loop.ogg", db+20, 1};
+		sound[] = {"addons\AR_AdvancedRappelling\sounds\AR_Rappel_Loop.ogg", db+20, 1};
 		titles[] = {0,""};
 	};
 	class AR_Rappel_Start
 	{
 		name = "AR_Rappel_Start";
-		sound[] = {"addonsaddons\AR_AdvancedRappelling\sounds\AR_Rappel_Start.ogg", db+20, 1};
+		sound[] = {"addons\AR_AdvancedRappelling\sounds\AR_Rappel_Start.ogg", db+20, 1};
 		titles[] = {0,""};
 	};
 	class AR_Rappel_End
 	{
 		name = "AR_Rappel_End";
-		sound[] = {"addonsaddons\AR_AdvancedRappelling\sounds\AR_Rappel_End.ogg", db+20, 1};
+		sound[] = {"addons\AR_AdvancedRappelling\sounds\AR_Rappel_End.ogg", db+20, 1};
 		titles[] = {0,""};
 	};
 };

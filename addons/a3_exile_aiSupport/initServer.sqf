@@ -50,6 +50,7 @@
 	call AISupport_fnc_Messages;
 	call AISupport_fnc_Helpers;
 
-
+	[10] spawn AISupport_fnc_UnitMonitor;
+	[5] spawn AISupport_fnc_PlayerMonitor;
 
 		 

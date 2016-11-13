@@ -13,7 +13,7 @@ try
 
     if !(alive _vehicle) exitWith
     { 
-		format["HeliParatroopers_Monitor :: Heli died before it could reach drop point. Parameters: %1", DMS_vehicleParatrooper_Arr deleteAt _forEachIndex] call DMS_fnc_DebugLog;
+
     };  
 	
 	_vehicle engineOn true; 
@@ -47,13 +47,9 @@ try
  		_x allowDamage (true); 
 	} forEach crew _vehicle; 	    
 
-	format ["[%2] %1, this is %2. We are on your position for support. Over.", (group player), _callSign] remoteExecCall ["systemChat"];
-	sleep 2;
-	format ["[%1] Roger %2. Out.", (group player), _callSign] remoteExecCall ["systemChat"];
+	_callSign call AISupport_Message_AirSupport_OnLocation;
 
 	[(driver _vehicle)] joinSilent (group player);	
-
-
 
 	[_vehicle] spawn {
 		params["_vehicle"];
@@ -99,10 +95,8 @@ try
 			_vehicle setVariable ["missionComplete",true];
 		};
 
-	format ["[%2] %1, we are low on fuel and are returnign to base. Over.", (group player), _callSign] remoteExecCall ["systemChat"];
-	sleep 2;
-	format ["[%1] Copy %2. Thanks for the support. Out.", (group player), _callSign] remoteExecCall ["systemChat"];
-
+	_callSign call AISupport_Message_AirSupport_RTB;
+	 
 	if(_vehicle getVariable ["isContinuous", false])
 		exitWith{  
 			_vehicle setVariable ["missionComplete",true];

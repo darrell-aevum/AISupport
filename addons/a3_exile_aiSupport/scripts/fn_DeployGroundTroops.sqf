@@ -13,8 +13,7 @@ exitWith
 
 try
 {	  
-	format ["Ground Tropps", (group player)] remoteExecCall ["systemChat"]; 
-
+	format ["Ground Tropps", (group player)] remoteExecCall ["systemChat"];  
 
 	if (isNull _heli) exitWith
     {
@@ -23,7 +22,7 @@ try
 
     if !(alive _heli) exitWith
     { 
-		format["HeliParatroopers_Monitor :: Heli died before it could reach drop point. Parameters: %1", DMS_HeliParatrooper_Arr deleteAt _forEachIndex] call DMS_fnc_DebugLog;
+		
     }; 
 	 _heli setFuel 1;
 	 _heli engineOn true; 

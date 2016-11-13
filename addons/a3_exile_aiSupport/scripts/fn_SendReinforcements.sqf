@@ -15,7 +15,7 @@ try
 
     if !(alive vic) exitWith
     { 
-		format["HeliParatroopers_Monitor :: Heli died before it could reach drop point. Parameters: %1", DMS_vehicleParatrooper_Arr deleteAt _forEachIndex] call DMS_fnc_DebugLog;
+		
     }; 
 
 	vic engineOn true; 
@@ -65,33 +65,27 @@ try
 
 	_doHeliIntro = true;
 	if(!smokeOut) then {
-	_doHeliIntro = false;
-		format ["[%2] %1, this is %2. Over.", (group player), _callSign] remoteExecCall ["systemChat"];
-		sleep 2;
-		format ["[%2] Roger %2, this is %1. Over.", (group player), _callSign] remoteExecCall ["systemChat"];
-		sleep 2;
-		format ["[%2] %1, Drop us some smoke on a good insertion point for these guys. Over.", (group player), _callSign] remoteExecCall ["systemChat"];
-		sleep 2;
-		format ["[%1] Roger %2. Out.", (group player), _callSign] remoteExecCall ["systemChat"];
-	};
-	_count = 1;
-	_continueWithMission = true;
-	while{!smokeOut} do {
+		_doHeliIntro = false;
+			_callSign call AISupport_Message_Reinforcements_PopSmoke;
+		};
+		_count = 1;
+		_continueWithMission = true;
+		while{!smokeOut} do {
 			sleep 10;
 			if(smokeOut)
 				exitWith{true};
 			if(_count == 1) then {
-				format ["[%2] %1, pop smoke! Over.", (group player), _callSign] remoteExecCall ["systemChat"];			
+				_callSign call AISupport_Message_Reinforcements_PopSmoke_Again;
 			};
 			if(_count == 2) then {
-				format ["[%2] %1, pop smoke! Over.", (group player), _callSign] remoteExecCall ["systemChat"];			
+				_callSign call AISupport_Message_Reinforcements_PopSmoke_Again;
 			};
 			if(_count == 3) then {
-				format ["[%2] God damnit %1, we are sitting ducks up here! Pop smoke or we are out of here. Over.", (group player), _callSign] remoteExecCall ["systemChat"];			
+				_callSign call AISupport_Message_Reinforcements_PopSmoke_LastTime;
 			};
 			if(_count == 4) then {
 				_continueWithMission = false;
-				format ["[%2] %1, we are heading back to base. Out.", (group player), _callSign] remoteExecCall ["systemChat"];			
+				_callSign call AISupport_Message_Reinforcements_PopSmoke_RTB;				
 				vic land "NONE"; 	
 				vic move (_homePoint); 
 				sleep 3;
@@ -116,20 +110,11 @@ try
 	};
 	player removeEventHandler ["Fired", _reinforcementRequest];
 	if(!_continueWithMission)
-	exitWith{
+		exitWith{
 		
-	};
-	if(_doHeliIntro) then {
-		format ["[%2] %1, this is %2. Over.", (name player), _callSign] remoteExecCall ["systemChat"];
-		sleep 2;
-		format ["[%2] Roger %2, this is %1. Over.", (name player), _callSign] remoteExecCall ["systemChat"];
-		sleep 2;
-	};
-
-	format ["[%2] %1, We see your smoke and are moving in for the insertion. Over.", (group player), _callSign] remoteExecCall ["systemChat"];
-	sleep 2;
-	format ["[%1] Roger %2. Out.", (group player), _callSign] remoteExecCall ["systemChat"];		
-  
+		};
+ 
+   _callSign call AISupport_Message_Reinforcements_OnLocation;
 
 	sleep 5; 
 

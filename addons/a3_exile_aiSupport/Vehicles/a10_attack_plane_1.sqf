@@ -7,7 +7,7 @@ _vic =	[
 		[],
 		[],
 		_group,
-		"Santa 1-1",
+		"Vegas 1-1",
 		"attack",
 		"FLY",
 		[
