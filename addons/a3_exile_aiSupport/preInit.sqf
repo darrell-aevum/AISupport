@@ -6,7 +6,7 @@ call AISupport_fnc_Messages;
 call AISupport_fnc_Helpers;
 //Load handy functions...
 
-if(isServer) then {
+//if(isServer) then {
 	AISupport_ActiveFireTeams = [];
 	AISupport_ActiveReinforcementTeams = [];
 	AISupport_ActiveAirSupportUnits = [];
@@ -39,4 +39,4 @@ if(isServer) then {
 	AISupport_InactiveTransportUnits = [
 		 	
 	]; 
-}; 
+//}; 
