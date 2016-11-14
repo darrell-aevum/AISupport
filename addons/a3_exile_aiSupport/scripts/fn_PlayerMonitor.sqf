@@ -3,7 +3,7 @@ params ["_delay"];
 while{true} do
 {  
  
-	if(isDedicated) then {
+	if(isServer) then {
  		waitUntil{!isNil "ExileClientLoadedIn"};
 		UISleep 0.1;
 		waitUntil{ExileClientLoadedIn};
@@ -12,8 +12,11 @@ while{true} do
 		UISleep 0.1;
 		waitUntil{!ExileClientPlayerIsBambi};
 		UISleep 0.1;
+	} else {
+	//	player setVariable ["ExileLocker", 5002];
+	//	player setVariable ["ExileScore", 1523];	
 	};
-	  
+	
 	_playerActions = player getVariable ["actions", []]; 
 
 	if(!alive player) 
@@ -35,20 +38,31 @@ while{true} do
 		_action = _x select 0;
 		_actionText = _action select 0;
 		_actionFunction = _action select 1;
-		
-		_minCost = _x select 1;
-		_minRespect = _x select 2;
- 		_requiredItems = _x select 3;
-
-		_playerTabs = 100000;// player getVariable ["ExileLocker", 0];
-		_playerRespect =  100000; // player getVariable ["Score", 0]; 
- 
+		  
+ 		_requiredItems = _x select 1;  
+		 
 		_playerAction = _playerActions select _forEachIndex;
 		
-		_text = "";
-
-		if(_playerTabs < _minCost || _playerRespect < _minRespect) then {
-			_text = format["<t color='#FFFF00'>%1</t>", _actionText];
+		_text = ""; 
+		_canSupport = false;
+		_supportType = "";
+		switch (_forEachIndex) do {
+			case 0:{
+				_supportType = "airSupport";				
+			};
+			case 1:{
+				_supportType = "fireMisison";				
+			};
+			case 2:{ 
+				_supportType = "reinforcements";				
+			};
+			default {  };
+		};
+		
+		_canSupport = [_supportType] call AIS_CanSupportPlayer;
+		  
+		if(!_canSupport) then {
+			_text = format["<t color='#aaaa00'>%1</t>", _actionText];
 		}
 		else {
 			_text = format["<t color='#00BFFF'>%1</t>", _actionText];

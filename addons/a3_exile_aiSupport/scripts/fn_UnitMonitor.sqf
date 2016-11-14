@@ -25,7 +25,7 @@ while{true} do
 	{
  
 	}
-	foreach	AISupport_ActiveAirInsertionTeams;
+	foreach	AISupport_ActiveReinforcementTeams;
 
 	{
 		if(!alive (driver _x)) then {

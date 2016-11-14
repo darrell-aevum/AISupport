@@ -1,13 +1,27 @@
-private _added = false;  
-
+ 
 try
 {  
+ _canSupport = ["fireMission"] call AIS_CanSupportPlayer;
+ if(!_canSupport)
+ 	exitWith{  
+		_supportLevel = [AIS_FireMission_SupportLevels] call AIS_GetPlayerSupportLevel;
+		hint format["%1",_supportLevel];
+		if(count _supportLevel <= 0) then {
+			_minRespect = (AIS_FireMission_SupportLevels select 0) select 1;		
+			["errorToaster", "AIS - Fire Mission", Format ["You do not have enoug respect to call for a fire mission. You need a minimum of %1 respect", _minRespect]] call AISupport_fnc_SendMessage;
+		} else {
+			_level = _supportLevel select 0; 
+			_minTabs = _supportLevel select 2;
+
+			["errorToaster", "AIS - Fire Mission", Format ["You are at level %1 support. To call level %1 support, you need %2 poptabs.", _level, _minTabs]] call AISupport_fnc_SendMessage;
+		};
+	};
 
 	call AISupport_Message_FireSupport_Request;
 
-	_canSupport = (count AISupport_InactiveFireTeams > 0);
+	_availableSupport = (count AISupport_InactiveFireTeams > 0);
  
-	if(!_canSupport)
+	if(!_availableSupport)
 	exitWith{   
 		call AISupport_Message_FireSupport_NoAvailableTeams;
 	}; 

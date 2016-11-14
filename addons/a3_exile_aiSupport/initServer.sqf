@@ -3,12 +3,12 @@
     AISupport_HQCallSign = "Zues 7";
 
 	AISupport_ActiveFireTeams = [];
-	AISupport_ActiveAirInsertionTeams = [];
+	AISupport_ActiveReinforcementTeams = [];
 	AISupport_ActiveAirSupportUnits = [];
 	AISupport_ActiveTransportUnits = [];
 
 	AISupport_InactiveFireTeams = [];
-	AISupport_InactiveAirInsertionTeams = [];
+	AISupport_InactiveReinforcementTeams = [];
 	AISupport_InactiveAirSupportUnits = [];	
 	AISupport_InactiveTransportUnits = [];
  
@@ -30,8 +30,8 @@
  			call (compile loadFile "addons\a3_exile_aiSupport\fireTeams\mortars_2.sqf")
 		];
 	};
-	if(count AISupport_InactiveAirInsertionTeams >= 0 && count AISupport_ActiveAirInsertionTeams <= 0) then {
-		AISupport_InactiveAirInsertionTeams = [
+	if(count AISupport_InactiveReinforcementTeams >= 0 && count AISupport_ActiveReinforcementTeams <= 0) then {
+		AISupport_InactiveReinforcementTeams = [
 		   call (compile loadFile "addons\a3_exile_aiSupport\vehicles\reinforcement_heli_1.sqf")
 		];
 	};
