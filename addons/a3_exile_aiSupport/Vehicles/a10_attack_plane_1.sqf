@@ -1,5 +1,5 @@
 private _vehicle = nil;
-_group = createGroup RESISTANCE; 
+_group = createGroup AIS_Side; 
 _group setCombatMode "RED"; 	
 _vic =	[
 		["B_PLANE_CAS_01_F", [11916,2936,4.86],[[-0.799266,0.600977,0],[0,0,1]],false], 
@@ -26,5 +26,5 @@ _vic =	[
 		180  
 ];   
   
-_vehicle = _vic call AISupport_fnc_AddVehicle;	
+_vehicle = _vic call AIS_fnc_AddVehicle;	
 _vehicle;

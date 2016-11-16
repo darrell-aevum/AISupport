@@ -1,5 +1,5 @@
 private _vehicle = nil;
-_group = createGroup RESISTANCE; 
+_group = createGroup AIS_Side; 
 _group setCombatMode "RED"; 		
 _vic =	[ 
 		["B_CTRG_Heli_Transport_01_Tropic_F",[4463.86,9882.48,338.919],[[-0.507088,0.861888,0.00331182],[-0.00933489,-0.00933432,0.999913]],false],		
@@ -11,5 +11,5 @@ _vic =	[
 		"attack"
 ]; 
 
-_vehicle = _vic call AISupport_fnc_AddVehicle;	
+_vehicle = _vic call AIS_fnc_AddVehicle;	
 _vehicle;

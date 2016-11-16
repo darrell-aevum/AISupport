@@ -7,7 +7,7 @@ if !(params
 ])
 exitWith
 {
-	diag_log format ["AI SUPPORT ERROR :: Calling AISupport_fn_CreateFireTeam with invalid parameters: %1",_this];
+	diag_log format ["AI SUPPORT ERROR :: Calling AIS_fn_CreateFireTeam with invalid parameters: %1",_this];
 	false;
 };
  
@@ -21,7 +21,7 @@ try
 }
 catch
 {
-	diag_log format ["AI SUPPORT  ERROR :: Calling AISupport_fnc_AddObjects with invalid parameter: %1",_exception];
+	diag_log format ["AI SUPPORT  ERROR :: Calling AIS_fnc_AddObjects with invalid parameter: %1",_exception];
 }; 
 
 _at

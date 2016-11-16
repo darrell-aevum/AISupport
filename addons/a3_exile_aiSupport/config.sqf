@@ -1,4 +1,5 @@
-    AIS_HQCallSign									= "Zues 7";
+	AIS_HQCallSign									= "Zues 7";
+	AIS_Side										= INDEPENDENT;
 
 	/////////////////////////////
 	//  Fire Mission Settings  //

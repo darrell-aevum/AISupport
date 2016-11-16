@@ -15,30 +15,30 @@ while{true} do
 
 				if(_supportType == "reinforcement") then { 
 				{
-						AISupport_Reinforcements = AISupport_Reinforcements - [_x];
+						AIS_Reinforcements = AIS_Reinforcements - [_x];
 				};
 				if(_supportType == "attack") then { 
 				{
-					AISupport_AirSupportUnits = AISupport_AirSupportUnits - [_x];
+					AIS_AirSupportUnits = AIS_AirSupportUnits - [_x];
 				};
 				{
 					deleteVehicle _x; 
 				} forEach crew _x; 
 				deleteVehicle _x; 
 
-				_vehicle = _origParams call AISupport_fnc_AddVehicle;
+				_vehicle = _origParams call AIS_fnc_AddVehicle;
 				_vehicles pushBack _vehicle;
 
 				if(_supportType == "reinforcement") then { 
 				{
-						AISupport_Reinforcements pushBack _vehicle; 
+						AIS_Reinforcements pushBack _vehicle; 
 				};
 				if(_supportType == "attack") then { 
 				{
-					AISupport_AirSupportUnits pushBack _vehicle; 
+					AIS_AirSupportUnits pushBack _vehicle; 
 				}; 
 			};												
 		} foreach _vehicles;			
-	} foreach AISupport_Bases; 
+	} foreach AIS_Bases; 
 	sleep _delay;
 };

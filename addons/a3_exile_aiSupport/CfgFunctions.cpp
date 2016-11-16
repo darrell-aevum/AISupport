@@ -1,6 +1,6 @@
 class AISupport
 {
-	tag = "AISupport";
+	tag = "AIS";
 	class FNCs
 	{
 		file = "addons\a3_exile_aiSupport\scripts";		

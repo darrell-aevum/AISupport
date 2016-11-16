@@ -3,14 +3,13 @@ try
 	vic = (_this select 0);	
 	smokeOut = false;
 
-	_group = vic getVariable "group";
-	_name = vic getVariable "callSign";
+    _group = group vic;  
 	_homePoint = vic getVariable "originalPosition";
 	_callSign = vic getVariable ["callSign", vic];
 
 	if (isNull vic) exitWith
     {
-        diag_log format["AISupport ERROR :: Null vic in AISupport_Reinforcements (index %1). Parameters: %2", _forEachIndex, AISupport_Reinforcements deleteAt _forEachIndex];
+        diag_log format["AISupport ERROR :: Null vic in AIS_Reinforcements (index %1). Parameters: %2", _forEachIndex, AIS_Reinforcements deleteAt _forEachIndex];
     };
 
     if !(alive vic) exitWith
@@ -66,7 +65,7 @@ try
 	_doHeliIntro = true;
 	if(!smokeOut) then {
 		_doHeliIntro = false;
-			_callSign call AISupport_Message_Reinforcements_PopSmoke;
+			_callSign call AIS_Message_Reinforcements_PopSmoke;
 		};
 		_count = 1;
 		_continueWithMission = true;
@@ -75,17 +74,17 @@ try
 			if(smokeOut)
 				exitWith{true};
 			if(_count == 1) then {
-				_callSign call AISupport_Message_Reinforcements_PopSmoke_Again;
+				_callSign call AIS_Message_Reinforcements_PopSmoke_Again;
 			};
 			if(_count == 2) then {
-				_callSign call AISupport_Message_Reinforcements_PopSmoke_Again;
+				_callSign call AIS_Message_Reinforcements_PopSmoke_Again;
 			};
 			if(_count == 3) then {
-				_callSign call AISupport_Message_Reinforcements_PopSmoke_LastTime;
+				_callSign call AIS_Message_Reinforcements_PopSmoke_LastTime;
 			};
 			if(_count == 4) then {
 				_continueWithMission = false;
-				_callSign call AISupport_Message_Reinforcements_PopSmoke_RTB;				
+				_callSign call AIS_Message_Reinforcements_PopSmoke_RTB;				
 				vic land "NONE"; 	
 				vic move (_homePoint); 
 				sleep 3;
@@ -103,7 +102,7 @@ try
 						_activeSupportUnits = player getVariable ["ActiveSupportUnits", []];
 						_activeSupportUnits = _activeSupportUnits - [vic];
 						player setVariable ["ActiveSupportUnits", _activeSupportUnits];
-						vic setVariable ["missionComplete",true];
+						vic setVariable ["missionComplete",true, true];
 				}; 	
 			};
 			_count = _count + 1;
@@ -114,7 +113,7 @@ try
 		
 		};
  
-   _callSign call AISupport_Message_Reinforcements_OnLocation;
+   _callSign call AIS_Message_Reinforcements_OnLocation;
 
 	sleep 5; 
 
@@ -148,10 +147,10 @@ try
 	
 			waitUntil {isTouchingGround vic}; 
 			sleep 5; 
-			vic setVariable ["missionComplete",true];
+			vic setVariable ["missionComplete",true, true];
 	}; 	
  }
 catch
 {	
-	diag_log format ["AI SUPPORT ERROR :: Calling AISupport_fnc_RequestReinforcements with error: %1",_exception];
+	diag_log format ["AI SUPPORT ERROR :: Calling AIS_fnc_RequestReinforcements with error: %1",_exception];
 }

@@ -54,7 +54,7 @@ try
 			{ 
 				_ai = _group createUnit [_crew select _forEachIndex, [0,0,0], [], 0, "CAN_COLLIDE"]; 
 				_ai moveInCargo _vehicle;
-				_ai setVariable ["isDeployable", true];
+				_ai setVariable ["isDeployable", true, true];
 			}
 			forEach _crew;  
 		};
@@ -79,20 +79,19 @@ try
 			_group setCurrentWaypoint [_group, 0];
 		};
 		
-		_vehicle setVariable ["originalPosition", getPosASL _vehicle];
-		_vehicle setVariable ["originalParameters", _this];
-		_vehicle setVariable ["callSign", _callSign];
-		_vehicle setVariable ["group", _group];
-		_vehicle setVariable ["supportType", _supportType]; 
+		_vehicle setVariable ["originalPosition", getPosASL _vehicle, true];
+		_vehicle setVariable ["originalParameters", _this, true];
+		_vehicle setVariable ["callSign", _callSign, true]; 
+		_vehicle setVariable ["supportType", _supportType, true]; 
 
 		if(_isContinuous) then {
-			_vehicle setVariable ["isContinuous", _isContinuous];
-			_vehicle setVariable ["resetTime", _resetTime];
+			_vehicle setVariable ["isContinuous", _isContinuous, true];
+			_vehicle setVariable ["resetTime", _resetTime, true];
 		};
 }
 catch
 {
-	diag_log format ["AI SUPPORT  ERROR :: Calling AISupport_fnc_AddVehicles with invalid parameter: %1",_exception];
+	diag_log format ["AI SUPPORT  ERROR :: Calling AIS_fnc_AddVehicles with invalid parameter: %1",_exception];
 }; 
 
 _vehicle;

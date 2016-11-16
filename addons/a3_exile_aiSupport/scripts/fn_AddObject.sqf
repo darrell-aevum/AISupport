@@ -12,7 +12,7 @@ try
 }
 catch
 {
-	diag_log format ["AI SUPPORT  ERROR :: Calling AISupport_fnc_AddObjects with invalid parameter: %1",_exception];
+	diag_log format ["AI SUPPORT  ERROR :: Calling AIS_fnc_AddObjects with invalid parameter: %1",_exception];
 };
 
 _object

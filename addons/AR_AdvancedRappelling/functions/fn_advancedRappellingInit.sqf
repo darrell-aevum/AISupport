@@ -46,7 +46,7 @@ AR_Rappel_All_Cargo = {
 			params ["_vehicle",["_rappelHeight",25],["_positionASL",[]]];
 	 
 			_heliGroup = group driver _vehicle;
-			_vehicle setVariable ["AR_Units_Rappelling",true];
+			_vehicle setVariable ["AR_Units_Rappelling",true, true];
 
 			_heliGroupOriginalBehaviour = behaviour leader _heliGroup;
 			_heliGroupOriginalCombatMode = combatMode leader _heliGroup;
@@ -135,7 +135,7 @@ AR_Rappel_All_Cargo = {
 					_heliGroup setCombatMode _heliGroupOriginalCombatMode;
 					_heliGroup setFormation _heliGroupOriginalFormation;
 
-					_vehicle setVariable ["AR_Units_Rappelling",nil];  
+					_vehicle setVariable ["AR_Units_Rappelling",nil, true];  
 				};
 
 
@@ -157,7 +157,7 @@ AR_Rappel_All_Cargo = {
 			_heliGroup setCombatMode _heliGroupOriginalCombatMode;
 			_heliGroup setFormation _heliGroupOriginalFormation;
 
-			_vehicle setVariable ["AR_Units_Rappelling",nil];  
+			_vehicle setVariable ["AR_Units_Rappelling",nil, true];  
 			
 		};
 	} else {  
@@ -350,7 +350,7 @@ AR_Rappel_From_Heli = {
 			};
 		};
 		
-		_heli setVariable ["AR_Rappelling_Player_" + str _rappelPointIndex,_player];
+		_heli setVariable ["AR_Rappelling_Player_" + str _rappelPointIndex,_player, true];
 
 		_player setVariable ["AR_Is_Rappelling",true,true];
 
@@ -365,7 +365,7 @@ AR_Rappel_From_Heli = {
 				if!(_player getVariable ["AR_Is_Rappelling", false]) exitWith {};
 				sleep 2;
 			};
-			_heli setVariable ["AR_Rappelling_Player_" + str _rappelPointIndex, nil];
+			_heli setVariable ["AR_Rappelling_Player_" + str _rappelPointIndex, nil, true];
 		};
 
 	} else {

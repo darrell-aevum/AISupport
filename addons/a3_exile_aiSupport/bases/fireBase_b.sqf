@@ -66,7 +66,7 @@ _objects = [
 ["Land_Cargo_Patrol_V4_F",[5333.09,8962.69,9.39],[[-0.977503,0.21092,0],[0,0,1]],false] 
 ];
   
-_group = createGroup RESISTANCE; 
+_group = createGroup AIS_Side; 
 _group setCombatMode "RED"; 
 
 _turrets = [     
@@ -88,4 +88,4 @@ _base = [
 	[
 		[_turrets, _group]
 	]
-] call AISupport_fnc_AddBase; 
+] call AIS_fnc_AddBase; 

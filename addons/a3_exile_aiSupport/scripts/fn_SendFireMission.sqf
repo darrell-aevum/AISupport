@@ -5,7 +5,7 @@ if !(params
 ])
 exitWith
 {
-	diag_log format ["AI SUPPORT ERROR :: Calling AISupport_fn_RequestFireMission with invalid parameters: %1",_this];
+	diag_log format ["AI SUPPORT ERROR :: Calling AIS_fn_RequestFireMission with invalid parameters: %1",_this];
 	false;
 };
  
@@ -22,10 +22,10 @@ try
 	_tgtPosZ = _tgtPos select 2; 
 	
 	_eta = (_units select 0) getArtilleryETA [_tgtPos, currentMagazine (_units select 0)];
-	[_name, _eta] call AISupport_Message_FireSupport_Firing;
+	[_name, _eta] call AIS_Message_FireSupport_Firing;
 	 _group setCombatMode "RED"; 
 
- 	AISupport_ActiveFireTeams pushBack _fireTeam;
+ 	AIS_ActiveFireTeams pushBack _fireTeam;
 	{			
 			_vehicle = _x;
 		    _vehicle setVehicleAmmo  1;  					 
@@ -41,10 +41,14 @@ try
  
 
 	//Send it back to inactive...
-	AISupport_ActiveFireTeams = AISupport_ActiveFireTeams - [_fireTeam];
-	AISupport_InactiveFireTeams pushback _fireTeam; 
+	AIS_ActiveFireTeams = AIS_ActiveFireTeams - [_fireTeam];
+	AIS_InactiveFireTeams pushback _fireTeam; 
+
+	publicVariable "AIS_InactiveFireTeams";
+	publicVariable "AIS_ActiveFireTeams";
+
 }
 catch
 {
-	diag_log format ["AI SUPPORT  ERROR :: Calling AISupport_fn_RequestFireMission with invalid parameter: %1",_exception];
+	diag_log format ["AI SUPPORT  ERROR :: Calling AIS_fn_RequestFireMission with invalid parameter: %1",_exception];
 };

@@ -44,7 +44,7 @@ GetClosestAvailableFireTeam = {
 			_closestDistance = _distance;
 		};
 		
-	}foreach AISupport_InactiveFireTeams; 
+	}foreach AIS_InactiveFireTeams; 
 	_closestFireTeam
 };
  

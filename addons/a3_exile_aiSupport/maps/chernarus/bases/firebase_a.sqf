@@ -181,7 +181,7 @@ _objects = [
 	["Land_Mil_WallBig_4m_F",[4465.7,9914.91,339.004],[[0.588624,-0.808407,0],[0,0,1]],false]
 ];
   
-_group = createGroup RESISTANCE; 
+_group = createGroup AIS_Side; 
 _group setCombatMode "RED"; 
 
 _turrets = [
@@ -198,7 +198,7 @@ _base = [
 	[
 		[_turrets, _group]
 	]
-] call AISupport_fnc_AddBase;  
+] call AIS_fnc_AddBase;  
 
 
 

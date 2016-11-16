@@ -7,7 +7,7 @@ if !(params
 ])
 exitWith
 {
-	diag_log format ["AI SUPPORT ERROR :: Calling AISupport_fnc_AddVehicles with invalid parameters: %1",_this];
+	diag_log format ["AI SUPPORT ERROR :: Calling AIS_fnc_AddVehicles with invalid parameters: %1",_this];
 	false;
 };
 
@@ -17,7 +17,7 @@ try
 
 	if (isNull _heli) exitWith
     {
-        diag_log format["AISupport ERROR :: Null _heli in AISupport_Reinforcements (index %1). Parameters: %2", _forEachIndex, AISupport_Reinforcements deleteAt _forEachIndex];
+        diag_log format["AISupport ERROR :: Null _heli in AIS_Reinforcements (index %1). Parameters: %2", _forEachIndex, AIS_Reinforcements deleteAt _forEachIndex];
     };
 
     if !(alive _heli) exitWith
@@ -27,7 +27,7 @@ try
 	 _heli setFuel 1;
 	 _heli engineOn true; 
 	  	_heli flyInHeight 20;
-	_groupTroopsDropDistance = (floor random [AISupport_Reinforcements_GroundTroops_MinDistFromDrop, (AISupport_Reinforcements_GroundTroops_MaxDistFromDrop - AISupport_Reinforcements_GroundTroops_MinDistFromDrop), AISupport_Reinforcements_GroundTroops_MaxDistFromDrop]);
+	_groupTroopsDropDistance = (floor random [AIS_Reinforcements_GroundTroops_MinDistFromDrop, (AIS_Reinforcements_GroundTroops_MaxDistFromDrop - AIS_Reinforcements_GroundTroops_MinDistFromDrop), AIS_Reinforcements_GroundTroops_MaxDistFromDrop]);
  
  
  	_heli move (_dropPoint); 
@@ -81,7 +81,7 @@ try
  }
 catch
 {	
-	diag_log format ["AI SUPPORT ERROR :: Calling AISupport_fnc_RequestReinforcements with error: %1",_exception];
+	diag_log format ["AI SUPPORT ERROR :: Calling AIS_fnc_RequestReinforcements with error: %1",_exception];
 };
 
 _deployed

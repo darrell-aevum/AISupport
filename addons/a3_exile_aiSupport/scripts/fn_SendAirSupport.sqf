@@ -1,14 +1,14 @@
 try
 {	
 	_vehicle = _this select 0;	 
-	_group = _vehicle getVariable "group";
+	_group = group _vehicle;
 	_name = _vehicle getVariable "callSign";
 	_homePoint = _vehicle getVariable "originalPosition";
 	_callSign = _vehicle getVariable ["callSign", _vehicle];
 
 	if (isNull _vehicle) exitWith
     {
-        diag_log format["AISupport ERROR :: Null _vehicle in AISupport_Reinforcements (index %1). Parameters: %2", _forEachIndex, AISupport_Reinforcements deleteAt _forEachIndex];
+        diag_log format["AISupport ERROR :: Null _vehicle in AIS_Reinforcements (index %1). Parameters: %2", _forEachIndex, AIS_Reinforcements deleteAt _forEachIndex];
     };
 
     if !(alive _vehicle) exitWith
@@ -47,7 +47,7 @@ try
  		_x allowDamage (true); 
 	} forEach crew _vehicle; 	    
 
-	_callSign call AISupport_Message_AirSupport_OnLocation;
+	_callSign call AIS_Message_AirSupport_OnLocation;
 
 	[(driver _vehicle)] joinSilent (group player);	
 
@@ -92,14 +92,14 @@ try
 
 	if(!alive _vehicle)
 		exitWith{
-			_vehicle setVariable ["missionComplete",true];
+			_vehicle setVariable ["missionComplete",true, true];
 		};
 
-	_callSign call AISupport_Message_AirSupport_RTB;
+	_callSign call AIS_Message_AirSupport_RTB;
 	 
 	if(_vehicle getVariable ["isContinuous", false])
 		exitWith{  
-			_vehicle setVariable ["missionComplete",true];
+			_vehicle setVariable ["missionComplete",true, true];
 			deleteWaypoint _wp;
 			{
 				_group addWaypoint _x;				
@@ -126,10 +126,10 @@ try
 			waitUntil {isTouchingGround _vehicle};
 			sleep 5; 
  
-			_vehicle setVariable ["missionComplete",true];
+			_vehicle setVariable ["missionComplete", true, true];
 	}  
  }
 catch
 {	
-	diag_log format ["AI SUPPORT ERROR :: Calling AISupport_fnc_RequestReinforcements with error: %1",_exception];
+	diag_log format ["AI SUPPORT ERROR :: Calling AIS_fnc_RequestReinforcements with error: %1",_exception];
 }

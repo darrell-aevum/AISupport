@@ -122,7 +122,7 @@ _objects = [
 	["Land_HBarrier_01_line_5_green_F",[9982.82,9428.32,116.665],[[0.99769,0.0662291,-0.015077],[0.0026744,0.183496,0.983017]],false]
 ];
   
-_group = createGroup RESISTANCE; 
+_group = createGroup AIS_Side; 
 _group setCombatMode "RED"; 
 
 _turrets = [
@@ -139,4 +139,4 @@ _base = [
 	[
 		[_turrets, _group]
 	]
-] call AISupport_fnc_AddBase; 
+] call AIS_fnc_AddBase; 

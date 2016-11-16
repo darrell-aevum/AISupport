@@ -1,31 +1,18 @@
-params ["_delay"]; 
- 	if(isMultiplayer) then {
- 		waitUntil{!isNil "ExileClientLoadedIn"};
-		UISleep 0.1;
-		waitUntil{ExileClientLoadedIn};
-		UISleep 0.1; 
-		//waitUntil{!ExileClientPlayerIsBambi};
-		//UISleep 0.1;
-	} else {
-		//	player setVariable ["ExileLocker", 5002, true];
-		//	player setVariable ["ExileScore", 1523, true];
-	};
-
-	_playerActions = player getVariable ["actions", []]; 
-
-	if(!alive player) 
+    params ["_player"];
+ 
+	if(!alive _player) 
 		exitWith{
  			{
-				player removeAction _x;
+				_player removeAction _x;
 			} foreach _playerActions;		
 		}; 
 
 	if(count _playerActions <= 0) then {
 		{ 
-			_playerAction = player addAction (_x select 0);
+			_playerAction = _player addAction (_x select 0);
 			_playerActions pushBack _playerAction;
 		} foreach AIS_Player_Actions; 
-		player setVariable ["actions", _playerActions]; 	 	
+		_player setVariable ["actions", _playerActions]; 	 	
 	};
 
 	{
@@ -75,7 +62,7 @@ params ["_delay"];
 			};
 		};  
 
-		player setUserActionText [_playerAction, _text];
+		_player setUserActionText [_playerAction, _text];
 	} foreach AIS_Player_Actions;  
-	sleep _delay;
- 	[_delay] spawn AIS_fnc_PlayerMonitor;
+ 
+ 

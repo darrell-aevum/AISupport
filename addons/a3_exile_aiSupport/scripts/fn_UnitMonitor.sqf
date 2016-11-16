@@ -13,26 +13,26 @@ while{true} do
 		} forEach crew _vehicle; 
 		deleteVehicle _vehicle; 
 
-		_newVehicle = _origParams call AISupport_fnc_AddVehicle;			
+		_newVehicle = _origParams call AIS_fnc_AddVehicle;			
 		_array pushBack _newVehicle;
 	};
 
 	{
 
 	}
-	foreach	AISupport_ActiveFireTeams;
+	foreach	AIS_ActiveFireTeams;
 
 	{
  
 	}
-	foreach	AISupport_ActiveReinforcementTeams;
+	foreach	AIS_ActiveReinforcementTeams;
 
 	{
 		if(!alive (driver _x)) then {
 			exitWith {
 				_respawnOnDeath = _x getVariable ["respawnOnDeath", true];
 				if (_respawnOnDeath) then {
-					[AISupport_ActiveFireTeams, _x] spawn _readdUnit;
+					[AIS_ActiveFireTeams, _x] spawn _readdUnit;
 				};
 		}
 		else {
@@ -40,10 +40,10 @@ while{true} do
 			if(_isContinuous) then {			
 				_resetTime = _x getVariable ["resetTime", (60 * 60)];
 				if(resetTime <= 0) then {
-					[AISupport_ActiveFireTeams, _x] spawn _readdUnit;
+					[AIS_ActiveFireTeams, _x] spawn _readdUnit;
 				}
 				else {				
-					_x setVariable ["resetTime", (_resetTime - _delay)];
+					_x setVariable ["resetTime", (_resetTime - _delay), true];
 				};
 
 				if((_x getVariable ["missionComplete", false])) then {
@@ -56,26 +56,30 @@ while{true} do
 					}
 					foreach (crew _x);
 					_x setFuel 1;
-					AISupport_ActiveAirSupportUnits = AISupport_ActiveAirSupportUnits - [_x];
-					AISupport_InactiveAirSupportUnits pushback _x;
+					AIS_ActiveAirSupportUnits = AIS_ActiveAirSupportUnits - [_x];
+					AIS_InactiveAirSupportUnits pushback _x;
+		
+					publicVariable "AIS_InactiveAirSupportUnits";
+					publicVariable "AIS_ActiveAirSupportUnits";
+		
 				};
 			}
 			else {
 				if((_x getVariable ["missionComplete", false])) then {
-					[AISupport_ActiveFireTeams, _x] spawn _readdUnit; 
+					[AIS_ActiveFireTeams, _x] spawn _readdUnit; 
 				};
 			};
 		};
 	}
-	foreach	AISupport_ActiveAirSupportUnits;
+	foreach	AIS_ActiveAirSupportUnits;
 
 	{
 		_respawnOnDeath = _x getVariable ["respawnOnDeath", true];
 		if((!alive (driver _x) || (_x getVariable ["missionComplete", false])) && _respawnOnDeath) then {
-			[AISupport_ActiveFireTeams, _x] spawn _readdUnit;
+			[AIS_ActiveFireTeams, _x] spawn _readdUnit;
 		};
 	}
-	foreach	AISupport_ActiveTransportUnits; 
+	foreach	AIS_ActiveTransportUnits; 
 
 	sleep _delay;
 };
