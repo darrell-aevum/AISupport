@@ -17,7 +17,7 @@ try
 		_object setVectorDirAndUp (_x select 2);
 		_object allowDamage (_x select 3); 
 
-		_gunner = _group createUnit ["B_Crew_F", [0,0,0], [], 0, "CAN_COLLIDE"]; 
+		_gunner = _group createUnit ["I_Crew_F", [0,0,0], [], 0, "CAN_COLLIDE"]; 
  
 		_gunner moveingunner _object;	
 	  

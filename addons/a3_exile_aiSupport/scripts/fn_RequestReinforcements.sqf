@@ -45,12 +45,15 @@
 	//Move from Inactive to Active...
 	AIS_InactiveReinforcementTeams = AIS_InactiveReinforcementTeams - [_inactiveTeam];
 	AIS_ActiveReinforcementTeams pushBack _inactiveTeam;
+	
+	_inactiveTeam setVariable ["assignedTo", player, true];
 		
 	publicVariable "AIS_InactiveReinforcementTeams";
 	publicVariable "AIS_ActiveReinforcementTeams";
 		
 	_callSign = _inactiveTeam getVariable ["callSign", _inactiveTeam];
- 
+	
+
 	[_inactiveTeam, getPosASL player] spawn AIS_fnc_SendReinforcements;  
 
 	_callSign call AIS_Message_Reinforcements_InRoute;

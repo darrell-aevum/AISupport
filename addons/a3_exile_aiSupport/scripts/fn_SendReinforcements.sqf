@@ -2,7 +2,25 @@ try
 {	
 	vic = (_this select 0);	
 	smokeOut = false;
+	[vic] spawn {
+		params["_vic"];
+		while{alive _vic && !(_vic getVariable ["missionComplete", false]) && alive player} do {
+			sleep 2;
+		};
+		_vic setVariable ["missionComplete",true, true];
+		_vic setVariable ["assignedTo", nil, true]; 
+		
+		{
+			deleteWaypoint _x;
+		} foreach (waypoints group _vic);
+		
+		vic land "NONE";
+		vic engineOn false; 
 
+		if!(alive _vic) then {		
+			["ErrorTitleAndText", ["AI Support - Reinforcements", "Your reinforcements were shot down. Hopefully your guys got out before they blew up."]] call ExileClient_gui_toaster_addTemplateToast;		
+		};
+	};
     _group = group vic;  
 	_homePoint = vic getVariable "originalPosition";
 	_callSign = vic getVariable ["callSign", vic];
@@ -69,10 +87,13 @@ try
 		};
 		_count = 1;
 		_continueWithMission = true;
-		while{!smokeOut} do {
+		while{!smokeOut && (alive vic)} do {
 			sleep 10;
 			if(smokeOut)
 				exitWith{true};
+			if(!(alive vic) || !(alive player) || !(alive (driver vic)))
+				exitWith{_continueWithMission = false};
+
 			if(_count == 1) then {
 				_callSign call AIS_Message_Reinforcements_PopSmoke_Again;
 			};
@@ -84,8 +105,10 @@ try
 			};
 			if(_count == 4) then {
 				_continueWithMission = false;
-				_callSign call AIS_Message_Reinforcements_PopSmoke_RTB;				
+				_callSign call AIS_Message_Reinforcements_PopSmoke_RTB;
+				["ErrorTitleAndText", ["AI Support - Reinforcements", "The insertion team is returning to base because they couldn't locate your smoke."]] call ExileClient_gui_toaster_addTemplateToast;
 				vic land "NONE"; 	
+				_group setCombatMode "BLUE";
 				vic move (_homePoint); 
 				sleep 3;
 
@@ -98,11 +121,13 @@ try
 				{
 						vic land "LAND";
 						waitUntil {isTouchingGround vic};
-						sleep 5;
+						sleep 10;
 						_activeSupportUnits = player getVariable ["ActiveSupportUnits", []];
 						_activeSupportUnits = _activeSupportUnits - [vic];
 						player setVariable ["ActiveSupportUnits", _activeSupportUnits];
 						vic setVariable ["missionComplete",true, true];
+						vic setVariable ["assignedTo", nil, true];
+						
 				}; 	
 			};
 			_count = _count + 1;
@@ -113,16 +138,28 @@ try
 		
 		};
  
-   _callSign call AIS_Message_Reinforcements_OnLocation;
-
+   if(alive vic) then {
+	_callSign call AIS_Message_Reinforcements_OnLocation;
+   };
 	sleep 5; 
-
-	_rappelling = vic getVariable "AR_Units_Rappelling";
-	while {!isNil "_rappelling"} do {
+	if(alive vic) then {
 		_rappelling = vic getVariable "AR_Units_Rappelling";
-		sleep 1;
-	};  
-	
+		while {!isNil "_rappelling"} do {
+			_rappelling = vic getVariable "AR_Units_Rappelling";
+			sleep 1;
+		};  
+		
+		{
+			_teamMembers = player getVariable ["teamMembers", []];
+
+			if(!isPlayer _x) then {
+				_teamMembers pushBack _x;
+			};
+
+			_teamMembers = player setVariable ["teamMembers", _teamMembers];
+		} foreach (units group player);
+	};
+
 	(group player) setBehaviour "COMBAT";
 	(group player) setCombatMode "RED";
 
@@ -130,11 +167,11 @@ try
 	vic land "NONE"; 	
 	vic move (_homePoint); 
 	sleep 3;
-
-	waitUntil{(vic distance2D (_homePoint)) < 500};  
-	_group setCombatMode "BLUE"; 
-
-	 
+	
+	if(alive vic) then {
+		waitUntil{(vic distance2D (_homePoint)) < 500};  
+		_group setCombatMode "BLUE"; 
+	 };
 
 	while { ( (alive vic) && !(unitReady vic) ) } do
 	{
@@ -146,8 +183,9 @@ try
 			vic land "LAND";
 	
 			waitUntil {isTouchingGround vic}; 
-			sleep 5; 
+			sleep 10; 
 			vic setVariable ["missionComplete",true, true];
+			vic setVariable ["assignedTo", nil, true];
 	}; 	
  }
 catch

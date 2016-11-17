@@ -8,7 +8,8 @@ class AISupport
 		class AddObject {};		
 		class AddStaticWeapon {};
 		class AddUnits {};
-		class AddVehicle {};		
+		class AddVehicle {};	
+		class AirSupportMonitor {};
 		class BaseMonitor {};				
 		class CreateAirAssaultTeam {};
 		class DeployGroundTroops {};
@@ -18,6 +19,7 @@ class AISupport
 		class Messages {};
 		class PlayerMonitor {};
 		class RebuildVehicle {};
+		class ReinforcementsMonitor {};
 		class RequestAirSupport {};
 		class RequestFireMission {};
 		class RequestReinforcements {};

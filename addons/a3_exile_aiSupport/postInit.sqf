@@ -58,8 +58,9 @@
 	call AIS_fnc_Messages;
 	call AIS_fnc_Helpers;
 
-	[10] spawn AIS_fnc_UnitMonitor;
-
+	[10] spawn AIS_fnc_ReinforcementsMonitor;
+	[10] spawn AIS_fnc_AirSupportMonitor;
+	
 	AIS_Player_Actions = [
 		[["Request Air Support", {call AIS_fnc_RequestAirSupport}]],
 		[["Request Fire Mission", {call AIS_fnc_RequestFireMission}]],

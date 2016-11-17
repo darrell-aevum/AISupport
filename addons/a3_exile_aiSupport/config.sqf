@@ -1,6 +1,6 @@
 	AIS_HQCallSign									= "Zues 7";
 	AIS_Side										= INDEPENDENT;
-
+	AIS_MaxActiveTimeForVehicles					= 900;
 	/////////////////////////////
 	//  Fire Mission Settings  //
 	/////////////////////////////

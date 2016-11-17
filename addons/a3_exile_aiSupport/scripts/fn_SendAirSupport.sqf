@@ -11,11 +11,26 @@ try
         diag_log format["AISupport ERROR :: Null _vehicle in AIS_Reinforcements (index %1). Parameters: %2", _forEachIndex, AIS_Reinforcements deleteAt _forEachIndex];
     };
 
-    if !(alive _vehicle) exitWith
-    { 
+	[_vehicle] spawn {
+		params["_vic"];
+		while{alive _vic && !(_vic getVariable ["missionComplete", false]) && alive player} do {
+			sleep 2;
+		};
+		_vic setVariable ["missionComplete",true, true];
+		_vic setVariable ["assignedTo", nil, true]; 
+		
+		{
+			deleteWaypoint _x;
+		} foreach (waypoints group _vic);
+		
+		vic land "NONE";
+		vic engineOn false; 
 
-    };  
-	
+		if!(alive _vic) then {		
+			["ErrorTitleAndText", ["AI Support - Reinforcements", "Your reinforcements were shot down. Hopefully your guys got out before they blew up."]] call ExileClient_gui_toaster_addTemplateToast;		
+		};
+	};
+
 	_vehicle engineOn true; 
 
 	if(_vehicle getVariable ["isContinuous", false]) then {		
@@ -90,16 +105,13 @@ try
 	sleep 300;
 	[(driver _vehicle)] joinSilent _group;	
 
-	if(!alive _vehicle)
-		exitWith{
-			_vehicle setVariable ["missionComplete",true, true];
-		};
-
+ 
 	_callSign call AIS_Message_AirSupport_RTB;
 	 
 	if(_vehicle getVariable ["isContinuous", false])
 		exitWith{  
 			_vehicle setVariable ["missionComplete",true, true];
+			_vehicle setVariable ["assignedTo", nil, true];
 			deleteWaypoint _wp;
 			{
 				_group addWaypoint _x;				
@@ -108,7 +120,7 @@ try
 		}; 
 
 	_vehicle setBehaviour "COMBAT";
-	_vehicle setCombatMode "GREEN";
+	_vehicle setCombatMode "BLUE";
 	_vehicle setFormation "LINE"; 
 
 	_vehicle land "NONE"; 	
@@ -126,7 +138,8 @@ try
 			waitUntil {isTouchingGround _vehicle};
 			sleep 5; 
  
-			_vehicle setVariable ["missionComplete", true, true];
+			_vehicle setVariable ["missionComplete", true, true]; 
+			_vehicle setVariable ["assignedTo", nil, true];
 	}  
  }
 catch

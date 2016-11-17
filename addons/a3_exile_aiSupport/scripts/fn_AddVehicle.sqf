@@ -17,7 +17,9 @@ params
 ] 
 try
 {
-	diag_log format ["[AI SUPPORT] :: Adding Vehicles"];		 
+	diag_log format ["[AI SUPPORT] :: Adding Vehicles"];
+	 	_origParams = [_vehicleProperties,_drivers,_gunners,_crew,_group,_callSign,_supportType,_special,_wayPoints,_randomizeWaypoints,_isContinuous,_resetTime];
+ 
 		_vehicle = createVehicle [_vehicleProperties select 0,  _vehicleProperties select 1, [], 0, _special];		
 		if(_special == "FLY") then { 
 			_vehicle setVelocity [100, 0, 0]; 
@@ -79,10 +81,11 @@ try
 			_group setCurrentWaypoint [_group, 0];
 		};
 		
-		_vehicle setVariable ["originalPosition", getPosASL _vehicle, true];
-		_vehicle setVariable ["originalParameters", _this, true];
+		_vehicle setVariable ["originalPosition", getPosASL _vehicle, true]; 
+		_vehicle setVariable ["originalParameters", _origParams, true];
 		_vehicle setVariable ["callSign", _callSign, true]; 
 		_vehicle setVariable ["supportType", _supportType, true]; 
+		_vehicle setVariable ["activeTime", 0, true];
 
 		if(_isContinuous) then {
 			_vehicle setVariable ["isContinuous", _isContinuous, true];

@@ -1,6 +1,6 @@
 private _vehicle = nil;
 _group = createGroup AIS_Side; 
-_group setCombatMode "RED"; 	
+_group setCombatMode "BLUE"; 	
 _vic =	[
 		["B_PLANE_CAS_01_F", [11916,2936,4.86],[[-0.799266,0.600977,0],[0,0,1]],false], 
 		["B_T_Pilot_F"],

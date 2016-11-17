@@ -12,12 +12,25 @@ params ["_delay"];
 	};
 
 	_playerActions = player getVariable ["actions", []]; 
+	_teamMembers = player getVariable ["teamMembers", []];
 
 	if(!alive player) 
 		exitWith{
  			{
 				player removeAction _x;
-			} foreach _playerActions;		
+			} foreach _playerActions;
+			{
+				_x setdammage 1; 
+				_teamMembers = _teamMembers - [_x];
+				[_x] spawn { 
+					params["_ai"]; 
+					sleep floor random [200, 300, 400];
+					deleteVehicle _ai;
+				};
+			} foreach _teamMembers;
+			player setVariable ["teamMembers", _teamMembers];					
+			sleep _delay;
+ 			[_delay] spawn AIS_fnc_PlayerMonitor;
 		}; 
 
 	if(count _playerActions <= 0) then {
@@ -77,5 +90,28 @@ params ["_delay"];
 
 		player setUserActionText [_playerAction, _text];
 	} foreach AIS_Player_Actions;  
+
+
+	{
+		if!(isPlayer _x) then {
+			if!(alive _x) then {
+ 
+				_teamMembers = _teamMembers - [_x];
+				[_teamMembers, _x] spawn { 
+					params["_teamMembers", "_ai"]; 
+					if(count _teamMembers > 0) then {
+						systemChat (format["[%1] %2, we've lost a man.", (name (_teamMembers select 0)), (name player)]);
+					} else {
+						["ErrorTitleAndText", ["AI Support - Reinforcements", "All of your team members have been killed."]] call ExileClient_gui_toaster_addTemplateToast;
+					};
+					sleep floor random [200, 300, 400];
+					deleteVehicle _ai;
+				};
+			};
+		};
+	} foreach _teamMembers;
+
+	player setVariable ["teamMembers", _teamMembers];
+
 	sleep _delay;
  	[_delay] spawn AIS_fnc_PlayerMonitor;
