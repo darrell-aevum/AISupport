@@ -36,8 +36,9 @@ while{true} do
  
 
 	{		
-		if(_x isKindOf "Man") exitWith {
-			if!(alive _x) then {				
+		if(_x isKindOf "Man") exitWith {			
+			_player = _x getVariable ["assignedTo", nil];
+			if!(alive _x) exitWith {				
 				[_x] spawn { 
 					params["_ai"]; 
 					sleep floor random [200, 300, 400];
@@ -48,7 +49,13 @@ while{true} do
 						deleteVehicle _ai;
 					};
 				};
-			}; 
+			};
+			if!(isNil "_player") exitWith {				
+				_x setdammage 1;
+			}; 			
+			if!(alive _player) exitWith {				
+				_x setdammage 1;
+			}; 			
 		};
 
 		_isContinuous = _x getVariable ["isContinuous", false];
