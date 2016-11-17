@@ -2,7 +2,7 @@ params ["_delay"];
  
 while{true} do
 {  
-	waitUntil{!isNil "AIS_ActiveReinforcementTeams"};
+	waitUntil{!isNil "AIS_ActiveReinforcementTeams"}; 
 	_readdUnit = {		
 		params["_vehicle"]; 		
 		_origParams = _vehicle getVariable "originalParameters";
@@ -35,7 +35,22 @@ while{true} do
 	};
  
 
-	{
+	{		
+		if(_x isKindOf "Man") exitWith {
+			if!(alive _x) then {				
+				[_x] spawn { 
+					params["_ai"]; 
+					sleep floor random [200, 300, 400];
+					 
+					if(_ai in AIS_ActiveReinforcementTeams) then {
+						AIS_ActiveReinforcementTeams = AIS_ActiveReinforcementTeams - [_ai];
+						publicVariable "AIS_ActiveReinforcementTeams";
+						deleteVehicle _ai;
+					};
+				};
+			}; 
+		};
+
 		_isContinuous = _x getVariable ["isContinuous", false];
 		_activeTime = _x getVariable ["activeTime", 0];
 		if(!(_isContinuous) && (_activeTime > AIS_MaxActiveTimeForVehicles)) exitWith {

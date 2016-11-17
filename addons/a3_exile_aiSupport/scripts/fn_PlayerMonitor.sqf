@@ -21,12 +21,7 @@ params ["_delay"];
 			} foreach _playerActions;
 			{
 				_x setdammage 1; 
-				_teamMembers = _teamMembers - [_x];
-				[_x] spawn { 
-					params["_ai"]; 
-					sleep floor random [200, 300, 400];
-					deleteVehicle _ai;
-				};
+				_teamMembers = _teamMembers - [_x]; 
 			} foreach _teamMembers;
 			player setVariable ["teamMembers", _teamMembers];					
 			sleep _delay;
@@ -103,9 +98,7 @@ params ["_delay"];
 						systemChat (format["[%1] %2, we've lost a man.", (name (_teamMembers select 0)), (name player)]);
 					} else {
 						["ErrorTitleAndText", ["AI Support - Reinforcements", "All of your team members have been killed."]] call ExileClient_gui_toaster_addTemplateToast;
-					};
-					sleep floor random [200, 300, 400];
-					deleteVehicle _ai;
+					}; 
 				};
 			};
 		};

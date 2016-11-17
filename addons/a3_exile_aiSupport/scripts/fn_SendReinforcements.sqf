@@ -151,9 +151,12 @@ try
 		
 		{
 			_teamMembers = player getVariable ["teamMembers", []];
-
+								
 			if(!isPlayer _x) then {
 				_teamMembers pushBack _x;
+				_x setVariable ["assignedTo", player, true];
+				AIS_ActiveReinforcementTeams pushBack _x;
+				publicVariable "AIS_ActiveReinforcementTeams";
 			};
 
 			_teamMembers = player setVariable ["teamMembers", _teamMembers];
