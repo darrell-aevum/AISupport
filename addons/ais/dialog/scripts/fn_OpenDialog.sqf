@@ -3,20 +3,16 @@
 	player action ["WeaponOnBack", player];
 	createDialog "AISDialog";
 
- 
+ 	_playerLocker = player getVariable ["ExileLocker", 99999];
+	_playerMoney = player getVariable ["ExileMoney", 99999];
+	_playerTabs = _playerMoney + _playerLocker;
+	_playerRespect = ExileClientPlayerScore;
 
-	["artillery"] call AIS_Client_fnc_LoadArtilleryGUI; 	
+	["artillery"] call AIS_Dialog_Artillery_fnc_LoadGUI; 	
 	_serverTitleCbo = ((findDisplay AIS_Dialog) displayCtrl (10));
 	_plr = profileName;
 	_title = "AI Support Units";
-	_serverTitleCbo ctrlSetStructuredText parseText format ["<t align='left'>%1</t><t align='right'>%2</t>",_plr,_title];
+	_serverTitleCbo ctrlSetStructuredText parseText format ["<t align='left'>%3 - [%1] %2</t><t align='right'><img  size='0.85' image='addons\ais\icons\respect.paa'/> %5   <img  size='0.75' image='addons\ais\icons\poptab_ca.paa'/> %4</t>",group player, _plr,_title, _playerTabs, _playerRespect];
 	_plrClass = typeOf player;
 	_side = getNumber(configFile >> "cfgVehicles" >> _plrClass>> "side");
-	_flagCbo = ((findDisplay 1601) displayCtrl (11));
-	switch (_side) do
-	{				
-		case 0: {_flag = "\A3\Data_F\Flags\Flag_CSAT_CO.paa";}; 
-		case 1: {_flag = "\A3\Data_F\Flags\Flag_nato_CO.paa";}; 
-		case 2: {_flag = "\A3\Data_F\Flags\Flag_AAF_CO.paa";}; 	
-	};
-	_flagCbo ctrlSetText _flag;
+	 

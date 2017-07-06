@@ -8,16 +8,20 @@
 // Enables debug logging in AIS functions.
 AIS_DEBUG = false;
 
-AIS_Version = getText (configFile >> "CfgPatches" >> "a3_dms" >> "a3_AIS_version");
+AIS_Version = getText (configFile >> "CfgPatches" >> "a3_ais" >> "a3_AIS_version");
  
 //Load main config
 CALLFILE("addons\ais\config.sqf");
+CALLFILE("addons\ais\client\scripts\fn_Helpers.sqf");
+CALLFILE("addons\ais\client\scripts\fn_Messages.sqf")
 
 AIS_Dialog_Map = 4000;
-
-
-
+ 
 AIS_Dialog = 1600;
+
+AIS_Dialog_BtnConfirm = 7;
+AIS_Dialog_BtnCancel = 1902;
+AIS_Dialog_BtnClose = 1903;
 
 AIS_Dialog_UnitListBack = 1603;
 AIS_Dialog_UnitDescriptionBack = 1604;
@@ -41,11 +45,24 @@ AIS_Dialog_Cas_UnitDescription = 2302;
 AIS_Dialog_Cas_UnitInfo = 2303; 
 AIS_Dialog_Cas_Duration = 2304; 
  
-
+AIS_Dialog_Resupply = 2500;
+AIS_Dialog_Resupply_TraderCategories = 2501;
+AIS_Dialog_Resupply_TraderItemCategories = 2502;
+AIS_Dialog_Resupply_TraderItems = 2503; 
+AIS_Dialog_Resupply_TraderItemDescription = 2504; 
+AIS_Dialog_Resupply_CrateList = 2505; 
+AIS_Dialog_Resupply_DeliveryVehicle = 2506;  
+AIS_Dialog_Resupply_CrateTotal = 2507;
+AIS_Dialog_Resupply_AddItemToCrate = 2509; 
+   
 AIS_Dialog_Reinforcements = 2400;
+  
+CALLFILE("addons\ais\dialog\scripts\fn_DropdownLists.sqf");
 
+AIS_Poptab_Icon = "addons/ais/icons/poptab_ca.paa";
 
 publicVariable "AIS_Reinforcement_Units";
 publicVariable "AIS_Cas_Units";
 publicVariable "AIS_Artillery_Units";
  
+

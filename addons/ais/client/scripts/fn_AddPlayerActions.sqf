@@ -24,7 +24,7 @@
 		
 		playerAction = player addAction [
 			"Open AI Support", 
-			{call AIS_Client_fnc_OpenDialog},
+			{call AIS_Dialog_fnc_OpenDialog},
 			[],
 			1.5,
 			false
