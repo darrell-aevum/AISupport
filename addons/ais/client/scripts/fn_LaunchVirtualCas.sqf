@@ -65,8 +65,7 @@
 		_wp setWaypointType "SAD"; 
 		_wp setWaypointBehaviour "COMBAT";
 		_wp setWaypointCombatMode "RED";
-		group _vic setCurrentWaypoint _wp;
-		hint format["Is Touching: %1", isTouchingGround _vic];
+		group _vic setCurrentWaypoint _wp; 
 		sleep 5;
 		deleteWaypoint _wp;
 	};
