@@ -17,32 +17,8 @@
 	AIS_Resupply_Delivery_Vehicles = [
 		["B_G_Van_01_transport_F", "", 500, 500, ["ItemRadio"], 5],
 		["B_Truck_01_transport_F", "", 1000, 1500, ["ItemRadio"], 10],		  
-		["B_Heli_Light_01_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15,
-			[ 
-				[
-					[7919.09,10544.5,0],
-					[
-						[0.843809,0.533994,-0.0532571],
-						[0.0917025,-0.0456983,0.994737]
-					],
-					true,
-					"NONE"
-				]		
-			]
-		],			
-		["B_Heli_Transport_03_unarmed_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15,
-			[ 
-				[
-					[7919.09,10544.5,0],
-					[
-						[0.843809,0.533994,-0.0532571],
-						[0.0917025,-0.0456983,0.994737]
-					],
-					true,
-					"NONE"
-				]		
-			]
-		],
+		["B_Heli_Light_01_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15],			
+		["B_Heli_Transport_03_unarmed_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15],
 		["B_T_VTOL_01_armed_F", "", 3500, 10000, ["ItemRadio", "SmokeShell"], 20]
 	];
 
@@ -91,8 +67,8 @@
 //    CAS Settings                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////
 	AIS_Cas_TrackAircraftOnMap = true;  //Adds a marker to them for the crate's location
-	AIS_Cas_IncludePrimaryMapSpawnPoints = true;
-	AIS_Cas_IncludeSecondaryMapSpawnPoints = true;
+	AIS_Cas_IncludePrimaryMapSpawnPoints = false;
+	AIS_Cas_IncludeSecondaryMapSpawnPoints = false;
 	// Available aircraft for CAS
 	//[Class Name, Description, Cost, Respect, Required Items, RespectEarned, Spawn Positions [position, Dir and Up, allow dammage, special]]	
 	AIS_Cas_Units = [
@@ -108,18 +84,7 @@
 			1000, 
 			1500, 
 			["ItemRadio"], 
-			15, 						
-			[
-				[
-					[7919.09,10544.5,0],
-					[
-						[0.843809,0.533994,-0.0532571],
-						[0.0917025,-0.0456983,0.994737]
-					],
-					true,
-					"NONE"
-				]
-			]
+			15
 		]
 	];
 
