@@ -74,7 +74,12 @@ class AIS_Dialog_Reinforcements
 	class scripts 
 	{
 		file = "addons\ais\dialog\reinforcements\scripts";			
-		class LoadGUI {};		
+		class LoadGUI {};	 	
+		class AddUnitToCargo {};			
+		class CargoChanged {}; 
+		class RemoveUnitFromCargo {};
+        class SquadOrSoldierComboChanged {};
+ 	    class UnitChanged {};
 	};  
 };
 class AIS_Dialog_Resupply

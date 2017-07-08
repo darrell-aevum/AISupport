@@ -35,6 +35,7 @@ class AISDialog
 
 		artilleryControlGroup,	
 		casControlGroup,	
+		reinforcementsControlGroup,
 		resupplyControlGroup,
  	 	mapControl,
 
@@ -104,7 +105,7 @@ class AISDialog
 		x = 0.255 * safezoneW + safezoneX;
 		y = 0.355 * safezoneH + safezoneY;
 		w = 0.4900 * safezoneW;
-		h = (0.3970 * safezoneH)
+		h = (0.3970 * safezoneH);
 		colorBackground[] = {0.333,0.333,0.333,0.75};
 	};
 	
@@ -251,7 +252,7 @@ class AISDialog
 		x = 0.260 * safezoneW + safezoneX;
 		y = 0.365 * safezoneH + safezoneY;
 		w = 0.4800 * safezoneW;
-		h = (0.3850 * safezoneH)
+		h = (0.3850 * safezoneH);
 
 		class Controls
 		{ 			
@@ -386,7 +387,7 @@ class AISDialog
 		x = 0.260 * safezoneW + safezoneX;
 		y = 0.365 * safezoneH + safezoneY;
 		w = 0.4800 * safezoneW;
-		h = (0.3850 * safezoneH)
+		h = (0.3850 * safezoneH);
 
 		class Controls
 		{ 			
@@ -442,7 +443,7 @@ class AISDialog
 				x = 0.5550;
 				y = 0.0;
 				w = 0.2100 * safezoneW;
-				h = 0.030 * safezoneH
+				h = 0.030 * safezoneH;
 				onMouseButtonDown = "";
 				onMouseButtonUp = "";
 				onMouseZChanged = "";
@@ -464,38 +465,208 @@ class AISDialog
 				x = 0.5650;
 				y = 0.05;
 				w = 0.2100 * safezoneW;
-				h = 0.030 * safezoneH
+				h = 0.030 * safezoneH;
 			}; 					
 		}; 
 	}; 
 	class reinforcementsControlGroup:RscControlsGroup
-	{
-		idc = 2401;
-		x = 0.508 * safezoneW + safezoneX;
+	{ 
+		idc = 2400;
+		x = 0.260 * safezoneW + safezoneX;
 		y = 0.365 * safezoneH + safezoneY;
-		w = 0.2325 * safezoneW;
-		h = (0.32 * safezoneH)
+		w = 0.4800 * safezoneW;
+		h = (0.3850 * safezoneH);
 
 		class Controls
-		{
-			class statText: RscStructuredText
+		{ 		 
+ 			class UnitListBack: IGUIBack
 			{
-				idc = 2402;
-				colorText[] = {1,1,1,1};
-				colorBackground[] = {0.667,0.714,0.635,1};
-				shadow = 0.75;
-				size = 0.037;
+				idc = 2444; 
+				colorBackground[] = {0.667,0.714,0.635,.75}; 
 				x = 0;
 				y = 0;
 				w = 0.2325 * safezoneW;
-				h = (0.32 * safezoneH)-(0.05 * safezoneH);
+				h = 0.2085 * safezoneH;
+			}; 		
+			class UnitInfoBack: IGUIBack
+			{
+				idc = 2445; 
+				colorBackground[] = {0.667,0.714,0.635,.75}; 
+				x = 0.5400;
+				y = 0;
+				w = 0.2320 * safezoneW;
+				h = 0.3810 * safezoneH; 
+			}; 	
+			class DescriptionBack: IGUIBack
+			{
+				idc = 2446; 
+				colorBackground[] = {0.667,0.714,0.635,.75}; 
+				x = 0;
+				y = 0.430;
+				w = 0.2325 * safezoneW;
+				h = 0.1450 * safezoneH;
+			}; 		 
+			class SquadOrSoldierCombo: RscCombo
+			{
+				idc = 2401;
+			 	onLBSelChanged  = "[_this] spawn AIS_Dialog_Reinforcements_fnc_SquadOrSoldierComboChanged;";
+			//	colorText[] = {1,1,1,1};
+			//	colorDisabled[] = {1,1,1,0.25};
+			//	colorScrollbar[] = {1,0,0,0};
+			//	colorSelect[] = {1,1,1,1};
+			//	colorSelect2[] = {1,1,1,1};
+			//	colorSelectBackground[] = {0,0,0,0.5};
+			//	colorSelectBackground2[] = {0.667,0.714,0.635,1};
+				colorBackground[] = {0.0,0.0,0.0,.75};
+			//	shadow = 0.75;
+				x = 0.01;
+				y = 0.01;
+				w = 0.2245 * safezoneW;
+				h = 0.030 * safezoneH;
+			};	 				
+			class UnitListBox: RscListBox
+			{
+				idc = 2403;
+				onLBSelChanged  = "[] spawn AIS_Dialog_Reinforcements_fnc_UnitChanged;";
+				onLBDblClick   = "[_this select 1] spawn AIS_Dialog_Reinforcements_fnc_AddUnitToCargo;";
+				colorText[] = {1,1,1,1};
+				colorDisabled[] = {1,1,1,0.25};
+				colorScrollbar[] = {1,0,0,0};
+				colorSelect[] = {1,1,1,1};
+				colorSelect2[] = {1,1,1,1};
+				colorSelectBackground[] = {0,0,0,0.5};
+				colorSelectBackground2[] = {0.667,0.714,0.635,1}; 
+				shadow = 0.75;
+				x = 0.01;
+				y = 0.145;
+				w = 0.2245 * safezoneW;
+				h = 0.1250 * safezoneH;
+			};	 		
+			class UnitDescription: RscStructuredText
+			{
+				idc = 2404;
+				colorText[] = {1,1,1,1};
+				colorBackground[] = {0.667,0.714,0.635,0.0};
+				shadow = 0.75;
+				size = 0.037;
+				x = 0;
+				y = 0.430;
+				w = 0.2325 * safezoneW;
+				h = 0.1100 * safezoneH;
 				onMouseButtonDown = "";
 				onMouseButtonUp = "";
 				onMouseZChanged = "";
 				text = "";
-			};  	
-		};
-	
+			}; 	
+			class LblCargo: RscStructuredText
+			{
+				idc = 2498;
+				colorText[] = {1,1,1,1};
+				colorBackground[] = {0,0,0,.75};
+				shadow = 0.75;
+				x = 0.5475;
+				y = 0.0080;
+			    w = 0.2250 * safezoneW;
+				h = 0.025 * safezoneH;
+				onMouseButtonDown = "";
+				onMouseButtonUp = "";
+				onMouseZChanged = "";
+				text = "Cargo:";
+			};				
+			class CargoListBox: RscListBox
+			{
+				idc = 2405;				
+				onLBSelChanged   = "[_this] spawn AIS_Dialog_Reinforcements_fnc_CargoUnitChanged;";
+				onLBDblClick  = "[_this select 1] call AIS_Dialog_Reinforcements_fnc_RemoveUnitFromCargo;";		
+				colorText[] = {1,1,1,1};
+				colorDisabled[] = {1,1,1,0.25};
+				colorScrollbar[] = {1,0,0,0};
+				colorSelect[] = {1,1,1,1};
+				colorSelect2[] = {1,1,1,1};
+				colorSelectBackground[] = {0,0,0,0.5};
+				colorSelectBackground2[] = {0.667,0.714,0.635,1}; 
+				shadow = 0.75;
+				x = 0.5475;
+				y = 0.056;
+			    w = 0.2250 * safezoneW;
+				h = 0.145 * safezoneH; 
+			};		
+			class LblInsertionMethod: RscStructuredText
+			{
+				idc = 2498;
+				colorText[] = {1,1,1,1};
+				colorBackground[] = {0,0,0,.75};
+				shadow = 0.75;
+				x = 0.5475;
+				w = 0.2250 * safezoneW;
+				y = 0.410;			     
+				h = 0.025 * safezoneH;
+				onMouseButtonDown = "";
+				onMouseButtonUp = "";
+				onMouseZChanged = "";
+				text = "Insertion Method:";
+			};					
+			class DeliveryVehicle: RscCombo
+			{
+				idc = 2406;
+			 	onLBSelChanged  = "[] call AIS_Dialog_Reinforcements_fnc_CargoChanged;";
+			//	colorText[] = {1,1,1,1};
+			//	colorDisabled[] = {1,1,1,0.25};
+			//	colorScrollbar[] = {1,0,0,0};
+			//	colorSelect[] = {1,1,1,1};
+			//	colorSelect2[] = {1,1,1,1};
+			//	colorSelectBackground[] = {0,0,0,0.5};
+			//	colorSelectBackground2[] = {0.667,0.714,0.635,1};
+				colorBackground[] = {0.0,0.0,0.0,.75};
+			//	shadow = 0.75;
+				x = 0.5475;
+				w = 0.2250 * safezoneW;
+				y = 0.4560;				
+				h = 0.030 * safezoneH;
+			};		
+			class CargoTotalTxt: RscStructuredText
+			{
+				idc = 2407;
+				colorText[] = {1,1,1,1};
+			 	colorBackground[] = {0.667,0.714,0.635,0.5};
+				shadow = 0.75;
+				size = 0.037;
+				x = 0.5475;
+				w = 0.2250 * safezoneW;
+				y = 0.520; 
+				h = 0.09 * safezoneH; 
+				onMouseButtonDown = "";
+				onMouseButtonUp = "";
+				onMouseZChanged = "";
+				text = "";
+			}; 		 		
+			class AddUnitToCargoBtn: RscShortcutButton
+			{  
+				idc = 2409;
+				text = "Add To Cargo";
+				colorBackground[] = {0.4,0.4,0.4,0.75}; 
+				colorBackground2[] = {0.4,0.4,0.4,1}; 
+				colorBackgroundFocused[] = {0.4,0.4,0.4,1};
+				onButtonClick  = "[lbCurSel AIS_Dialog_Resupply_TraderItems] call AIS_Dialog_Reinforcements_fnc_AddUnitToCargo";		
+				x = 0.180;
+				y = 0.63;			
+				w = 0.1475 * safezoneW;
+				h = 0.0305 * safezoneH;
+			};	 					
+			class btnRemoveFromCrate: RscShortcutButton
+			{  
+				idc = 2410;
+				text = "Remove From Cargo";
+				colorBackground[] = {0.4,0.4,0.4,0.75}; 
+				colorBackground2[] = {0.4,0.4,0.4,1}; 
+				colorBackgroundFocused[] = {0.4,0.4,0.4,1};
+				onButtonClick  = "[lbCurSel AIS_Dialog_Resupply_CrateList] call AIS_Dialog_Reinforcements_fnc_RemoveUnitFromCargo;";		
+				x = 0.7250;
+	        	y = 0.335;			
+				w = 0.1435 * safezoneW;
+					h = 0.0305 * safezoneH;
+			};	   								
+		}; 
 	}; 
 	class resupplyControlGroup:RscControlsGroup
 	{

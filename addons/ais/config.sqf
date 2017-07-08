@@ -8,13 +8,80 @@
 		[[11835,9415.24,2.51486],[[-0.0252767,0.999681,0],[0,0,1]],true],
 		[[8092.42,11332.3,13.8911],[[0.999527,-0.0307582,0],[0,0,1]],true],
 		[[5828.47,13466.5,4.16881],[[-0.912562,0.408939,0],[0,0,1]],true],
-		[5845.67,13502.3,4.17198],[[-0.905952,0.42338,0],[0,0,1]],true],
+		[[5845.67,13502.3,4.17198],[[-0.905952,0.42338,0],[0,0,1]],true],
 		[[5863.23,13538.6,4.17712],[[-0.9051,0.425199,0],[0,0,1]],true],
 		[[5880.58,13574.3,4.17198],[[-0.898276,0.439431,0],[0,0,1]],true],
 		[[5911.31,13603,3],[[-0.901615,0.432539,0],[0,0,1]],true],
 		[[4065.71,14425.7,4.243],[[0.00131366,0.999999,0],[0,0,1]],true],
 		[[4090.82,14397.8,4.1861],[[0,1,0],[0,0,1]],true]
-	]
+	];
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//    Reinforcements Settings                                                           //
+//////////////////////////////////////////////////////////////////////////////////////////
+	AIS_Reinforcements_InsertionFee = .10;               //10% of total crate
+	AIS_Reinforcements_UnitMarkup = .35;                //35% of trader price
+	AIS_Reinforcements_Lifespan = 0;              // 0 is infinate
+	AIS_Reinforcements_TrackInsertionVehicleOnMap = true;  //Adds a marker to them for the crate's location	
+	AIS_Reinforcements_IncludePrimaryMapAirSpawnPoints = false;
+	AIS_Reinforcements_IncludeSecondaryMapAirSpawnPoints = false;
+	
+	//[Class Name, Description, Cost, Respect, Required Items, RespectEarned, Spawn Positions]	
+
+	AIS_Reinforcements_Insertion_Vehicles = [
+		["uns_h21c", "", 500, 500, ["ItemRadio"], 5],
+		["uns_UH1D_m60", "", 1000, 1500, ["ItemRadio"], 10],		  
+		["uns_ach47_m134", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns],			
+		["uns_ch34_sog", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns],
+		["uns_UH1D_m60", "", 3500, 10000, ["ItemRadio", "SmokeShell"], 20]
+	];
+
+	// [Class, Description, Cost, Rep, Required Items, Respect Earned / Lost]
+	AIS_Reinforcements_Insertion_Soldiers = [
+		["uns_men_USMC_68_HMG", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_MED", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_RTO", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_MTSG", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_GL", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_RF4", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_MRK", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_AHMG", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_SCT", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_RF2", "", 500, 500, ["ItemRadio"], 5],
+		["uns_men_USMC_68_ENG", "", 500, 500, ["ItemRadio"], 5]
+	];
+	// [Name, Description, Cost, Rep, Required Items, Respect Earned / Lost, Squad Members]
+	AIS_Reinforcements_Insertion_Squads = [
+		[
+			"Heavy Weapons Squad", "", 500, 500, ["ItemRadio"], 5,
+			[
+				"uns_men_USMC_68_HMG",
+				"uns_men_USMC_68_MED",
+				"uns_men_USMC_68_RTO",
+				"uns_men_USMC_68_MTSG",
+				"uns_men_USMC_68_GL",
+				"uns_men_USMC_68_RF4",
+				"uns_men_USMC_68_MRK",
+				"uns_men_USMC_68_AHMG",
+				"uns_men_USMC_68_SCT",
+				"uns_men_USMC_68_RF2",
+				"uns_men_USMC_68_RF2",
+				"uns_men_USMC_68_ENG"
+			]			
+		],
+		[
+			"Rifle Squad", "", 500, 500, ["ItemRadio"], 5,
+			[
+				"uns_men_USMC_68_ENG",
+				"uns_men_USMC_68_HMG",
+				"uns_men_USMC_68_MED",
+				"uns_men_USMC_68_RTO",
+				"uns_men_USMC_68_SCT",
+				"uns_men_USMC_68_GL",
+				"uns_men_USMC_68_MRK"
+			]			
+		] 
+	];	 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //    Resupply Settings                                                                 //
@@ -73,10 +140,7 @@
 		"Uniforms",
 		"Vests"
 	];
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
-
+ 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //    CAS Settings                                                                      //
@@ -94,14 +158,8 @@
 		["B_Heli_Light_01_armed_F", "", 1000, 1500, ["ItemRadio"], 10, _nam2_heli_spawns],
 		["B_Heli_Attack_01_F", "", 1000, 1500, ["ItemRadio"], 10, _nam2_heli_spawns] 
 	];
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
  
- 
-
-
+  
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //    Artillery Settings                                                                //
