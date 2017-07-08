@@ -115,7 +115,7 @@
 _vic setFuel 1; 
 
 //Sleep until CAS time is over
-sleep 35;	
+sleep _duration;	
 _vic setVariable["MissionComplete", true, true];
 
 

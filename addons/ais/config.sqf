@@ -2,6 +2,20 @@
 	AIS_HQCallSign									= "Pegusus 6";
 	AIS_Side										= INDEPENDENT;
 
+	_nam2_heli_spawns = [
+		[[15978,9454.84,81.3692],[[-0.850408,0.526123,0],[0,0,1]],true],
+		[[9608.76,5544.51,50.5889],[[-0.619626,-0.784898,0],[0,0,1]],true],
+		[[11835,9415.24,2.51486],[[-0.0252767,0.999681,0],[0,0,1]],true],
+		[[8092.42,11332.3,13.8911],[[0.999527,-0.0307582,0],[0,0,1]],true],
+		[[5828.47,13466.5,4.16881],[[-0.912562,0.408939,0],[0,0,1]],true],
+		[5845.67,13502.3,4.17198],[[-0.905952,0.42338,0],[0,0,1]],true],
+		[[5863.23,13538.6,4.17712],[[-0.9051,0.425199,0],[0,0,1]],true],
+		[[5880.58,13574.3,4.17198],[[-0.898276,0.439431,0],[0,0,1]],true],
+		[[5911.31,13603,3],[[-0.901615,0.432539,0],[0,0,1]],true],
+		[[4065.71,14425.7,4.243],[[0.00131366,0.999999,0],[0,0,1]],true],
+		[[4090.82,14397.8,4.1861],[[0,1,0],[0,0,1]],true]
+	]
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //    Resupply Settings                                                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -14,11 +28,12 @@
 	AIS_Resupply_IncludeSecondaryMapAirSpawnPoints = false;
 	// Available vehicles for supply delivery
 	//[Class Name, Description, Cost, Respect, Required Items, RespectEarned, Spawn Positions]	
+
 	AIS_Resupply_Delivery_Vehicles = [
 		["B_G_Van_01_transport_F", "", 500, 500, ["ItemRadio"], 5],
 		["B_Truck_01_transport_F", "", 1000, 1500, ["ItemRadio"], 10],		  
-		["B_Heli_Light_01_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15],			
-		["B_Heli_Transport_03_unarmed_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15],
+		["B_Heli_Light_01_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns],			
+		["B_Heli_Transport_03_unarmed_F", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns],
 		["B_T_VTOL_01_armed_F", "", 3500, 10000, ["ItemRadio", "SmokeShell"], 20]
 	];
 
@@ -74,18 +89,10 @@
 	AIS_Cas_Units = [
 		["B_Plane_CAS_01_F", "", 4500, 5000, ["ItemRadio"], 15],
 		["I_Plane_Fighter_03_CAS_F", "", 4500, 5000, ["ItemRadio"], 15],
-		["O_Heli_Light_02_F", "", 1000, 1500, ["ItemRadio"], 10],
-		["O_Heli_Light_02_v2_F", "", 1000, 1500, ["ItemRadio"], 10],
-		["B_Heli_Light_01_armed_F", "", 1000, 1500, ["ItemRadio"], 10],
-		["B_Heli_Attack_01_F", "", 1000, 1500, ["ItemRadio"], 10],
-		[
-			"O_Heli_Attack_02_F", 
-			"", 
-			1000, 
-			1500, 
-			["ItemRadio"], 
-			15
-		]
+		["O_Heli_Light_02_F", "", 1000, 1500, ["ItemRadio"], 10, _nam2_heli_spawns],
+		["O_Heli_Light_02_v2_F", "", 1000, 1500, ["ItemRadio"], 10, _nam2_heli_spawns],
+		["B_Heli_Light_01_armed_F", "", 1000, 1500, ["ItemRadio"], 10, _nam2_heli_spawns],
+		["B_Heli_Attack_01_F", "", 1000, 1500, ["ItemRadio"], 10, _nam2_heli_spawns] 
 	];
 
 
