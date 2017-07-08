@@ -10,9 +10,9 @@
 	};	 
 	_totalCost = _totalCost + _crateCost;
 
-	_lockerMoney = player getVariable ["ExileLocker", 99];
+	_playerLocker = player getVariable ["ExileLocker", 99];
 	_playerMoney = player getVariable ["ExileMoney", 9999];  
-	_playerTabs = _lockerMoney + _playerMoney;        
+	_playerTabs = _playerLocker + _playerMoney;        
 	_playerRespect = ExileClientPlayerScore;  
 
 	_deliveryVehicleIndex = lbCurSel AIS_Dialog_Resupply_DeliveryVehicle;           

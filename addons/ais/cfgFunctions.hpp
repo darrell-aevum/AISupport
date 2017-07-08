@@ -16,12 +16,14 @@ class AIS_Client
 	{
 		file = "addons\ais\client\scripts";
 		class AddPlayerActions {};  
+		class CreateAirVehicle {};
+		class DoCombatHover {};
 		class FireVirtualArtillery {};
 		class LaunchVirtualCas {};
 		class PlayerMonitor {}; 	
 		class SendMessage {};	
 		class SupplyDrop {};	
-		class SupplyDropService {};	
+		class SupplyDropService {};			
 	};  	 
 };
 

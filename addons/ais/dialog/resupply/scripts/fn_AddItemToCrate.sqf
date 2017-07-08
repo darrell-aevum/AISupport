@@ -2,14 +2,32 @@
 	params ["_selectedIndex"];
 	disableSerialization;
   
+	_playerLocker = player getVariable ["ExileLocker", 99];
+	_playerMoney = player getVariable ["ExileMoney", 99999];      
+	_playerTabs = _playerLocker + _playerMoney;		    
+	_playerRespect = ExileClientPlayerScore; 
+
+	//Crate List Item
 	_data = lbData [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
 	_value = lbValue [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
 	_picture = lbPicture [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
 	_text = lbText [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
 
- 		ctrlShow [AIS_Dialog_BtnConfirm, true];		
-		ctrlShow [AIS_Dialog_BtnCancel, true];
-		ctrlShow [AIS_Dialog_BtnClose, false];		
+	//Crate Item
+  	_currentSelection = lbCurSel AIS_Dialog_Resupply_TraderItems; 
+ 	_retail = getNumber (missionconfigfile >> "CfgExileArsenal" >> _data >> "price");	 
+	_itemMarkup = round(_retail * AIS_Resupply_ItemMarkup);
+	_cost = round (_itemMarkup + _retail);
+	_quality = getNumber (missionconfigfile >> "CfgExileArsenal" >> _data >> "quality");
+    _respect = getNumber ((missionconfigfile >> "CfgTrading" >> "requiredRespect") select _quality);
+	
+	if(_playerRespect < _respect) exitWith{};
+	if(_playerTabs < _cost) exitWith{};
+
+
+	ctrlShow [AIS_Dialog_BtnConfirm, true];		
+	ctrlShow [AIS_Dialog_BtnCancel, true];
+	ctrlShow [AIS_Dialog_BtnClose, false];		
 
  	_crateList = ((findDisplay AIS_Dialog) displayCtrl (AIS_Dialog_Resupply_CrateList));		 
 
@@ -29,10 +47,7 @@
 	};	 
 	_totalCost = _totalCost + _crateCost;
 
-	_lockerMoney = player getVariable ["ExileLocker", 99];
-	_playerMoney = player getVariable ["ExileMoney", 9999];  
-	_playerTabs = _lockerMoney + _playerMoney;        
-	_playerRespect = ExileClientPlayerScore;  
+
 
 	_deliveryVehicleIndex = lbCurSel AIS_Dialog_Resupply_DeliveryVehicle;           
 	_selectedDeliveryVic = AIS_Resupply_Delivery_Vehicles select _deliveryVehicleIndex;

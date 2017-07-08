@@ -23,8 +23,10 @@
 	_maxNumberOfRounds =  if (count _item > 5) then [{_item select 6 }, {4}];
 	_accuracy =  if (count _item > 6) then [{_item select 7 }, {100}];
 
-	_playerTabs = player getVariable ["ExileLocker", 999999];
-	_playerRespect = player getVariable ["ExileScore", 999999];
+	_playerLocker = player getVariable ["ExileLocker", 99];
+	_playerMoney = player getVariable ["ExileMoney", 99999];      
+	_playerTabs = _playerLocker + _playerMoney;		    
+	_playerRespect = ExileClientPlayerScore; 
 
 
 	for "_i" from 0 to (_maxNumberOfRounds - _minNumberOfRounds)  do {

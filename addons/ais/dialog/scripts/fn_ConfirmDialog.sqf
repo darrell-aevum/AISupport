@@ -1,5 +1,13 @@
 onMapSingleClick "mapclick = false; false"; 
+private["_playerLocker","_playerMoney","_playerTabs","_playerRespect", "_respectEarned"];
 
+_playerLocker = player getVariable ["ExileLocker", 99];
+_playerMoney = player getVariable ["ExileMoney", 99999];      
+_playerTabs = _playerLocker + _playerMoney;		     
+_playerRespect = ExileClientPlayerScore;
+_respectEarned = 0;
+ 
+ 
 switch (AIS_SelectedSupportType) do {
     case "artillery": 
     { 
@@ -21,12 +29,8 @@ switch (AIS_SelectedSupportType) do {
         _respect = if (count _unit > 3) then [{_unit select 3 }, {100}];
         _respectEarned = if (count _unit > 8) then [{_unit select 8 }, {0}];
         _respectEarned = _respectEarned * _shellCount;
-
-        _lockerMoney = player getVariable ["ExileLocker", 99];
-        _playerMoney = player getVariable ["ExileMoney", 9999];          
-	    _playerRespect = ExileClientPlayerScore; 
-
-        if(_playerMoney + _lockerMoney < _cost) exitWith {
+  
+        if(_playerTabs < _cost) exitWith {
             ["errorTitleAndText",    
                 [
                     "AI Support - Fire Mission",  
@@ -42,21 +46,10 @@ switch (AIS_SelectedSupportType) do {
                 ]
             ] call ExileClient_gui_toaster_addTemplateToast;                          
         };
-
-
-
+ 
         [_shellCount, _shellType, targetPos, _accuracy] spawn AIS_Client_fnc_FireVirtualArtillery;
         targetPos = nil;
- 
-        if(_playerMoney >= _cost) then {
-            [player, _playerMoney - _cost] remoteExec ["AIS_Server_fnc_SetPlayerMoney", 2];                        
-        }
-        else {
-            [player, _lockerMoney - _cost] remoteExec ["AIS_Server_fnc_SetPlayerLocker", 2];                        
-        }; 
-
-        [player, _playerRespect + _respectEarned] remoteExec ["AIS_Server_fnc_SetPlayerRespect", 2];      
-
+  
         ["infoTitleAndText",    
             [
                 "AI Support - Fire Mission",  
@@ -77,13 +70,9 @@ switch (AIS_SelectedSupportType) do {
         _cost = if (count _item > 2) then [{_item select 2 }, {100}];
         _respect = if (count _item > 3) then [{_item select 3 }, {100}];
         _respectEarned = if (count _item > 5) then [{_item select 5 }, {0}];
+        _spawnPositions = if (count _item > 6) then [{_item select 6 }, {nil}];
 
-	    _lockerMoney = player getVariable ["ExileLocker", 99];
-	    _playerMoney = player getVariable ["ExileMoney", 9999];     
-
-	    _playerRespect = ExileClientPlayerScore;     
-
-        if(_playerMoney + _lockerMoney < _cost) exitWith {
+        if(_playerTabs < _cost) exitWith {
             ["errorTitleAndText",    
                 [
                     "AI Support - CAS",  
@@ -100,18 +89,9 @@ switch (AIS_SelectedSupportType) do {
             ] call ExileClient_gui_toaster_addTemplateToast;                                       
         };
 
-        [_aircraftType, _duration] spawn AIS_Client_fnc_LaunchVirtualCas;
+        [_aircraftType, _spawnPositions, _duration] spawn AIS_Client_fnc_LaunchVirtualCas;
         targetPos = nil;
- 
-
-        if(_playerMoney >= _cost) then {
-            [_playerMoney - _cost] call SetPlayerMoney;            
-        }
-        else {
-            [_lockerMoney - _cost] call SetPlayerLocker; 
-        }; 
-        [player, _playerRespect + _respectEarned] remoteExec ["AIS_Server_fnc_SetPlayerRespect", 2];  
-
+   
         ["infoTitleAndText",    
             ["AI Support - CAS",  
               format["CAS mission called costing you %1 pop tabs. You earned %2 respect.", _cost, _respectEarned]]
@@ -140,14 +120,11 @@ switch (AIS_SelectedSupportType) do {
         _cost = if (count _selectedAircraftItem > 2) then [{_selectedAircraftItem select 2 }, {100}];
         _respect = if (count _selectedAircraftItem > 3) then [{_selectedAircraftItem select 3 }, {100}];
         _respectEarned = if (count _selectedAircraftItem > 5) then [{_selectedAircraftItem select 5 }, {0}];
+        _spawnPositions = if (count _selectedAircraftItem > 6) then [{_selectedAircraftItem select 6 }, {nil}];
 
         _totalCost = _totalCost + _cost;
-
-        _lockerMoney = player getVariable ["ExileLocker", 99];
-        _playerMoney = player getVariable ["ExileMoney", 9999];          
-	    _playerRespect = ExileClientPlayerScore;  
-
-        if(_playerMoney + _lockerMoney < _totalCost) exitWith {
+ 
+        if(_playerTabs < _totalCost) exitWith {
             ["errorTitleAndText",    
                 [
                     "AI Support - Resupply",  
@@ -163,20 +140,13 @@ switch (AIS_SelectedSupportType) do {
                 ]
             ] call ExileClient_gui_toaster_addTemplateToast;                          	
         };
-
  
         _selectedVicIndex = lbCurSel AIS_Dialog_Resupply_DeliveryVehicle;    
         _vicClass = (AIS_Resupply_Delivery_Vehicles select _selectedVicIndex) select 0;
 
-        [_items, _vicClass] spawn AIS_Client_fnc_SupplyDropService; 
+        [_items, _vicClass, _spawnPositions] spawn AIS_Client_fnc_SupplyDropService; 
 
-        if(_playerMoney >= _totalCost) then {
-            [_playerMoney - _totalCost] call SetPlayerMoney;            
-        }
-        else {
-            [_lockerMoney - _totalCost] call SetPlayerLocker; 
-        }; 
- 
+
         ["infoTitleAndText",    
             ["AI Support - Resupply",  
               format["Resupply mission called costing you %1 pop tabs. You earned %2 respect.", _totalCost, _respectEarned]]
@@ -184,5 +154,20 @@ switch (AIS_SelectedSupportType) do {
     };       
 };
 
+/*
+if(_playerTabs < _totalCost) exitWith {};
+if(_playerRespect < _respect) exitWith {};
+
+if(_playerMoney >= _totalCost) then {
+    [_playerMoney - _totalCost] call SetPlayerMoney;            
+}
+else {
+    _totalCost = _totalCost - _playerMoney;
+    [0] call SetPlayerMoney; 
+    [_playerLocker - _totalCost] call SetPlayerLocker; 
+}; 
+ 
+[player, _playerRespect + _respectEarned] remoteExec ["AIS_Server_fnc_SetPlayerRespect", 2];    
+*/
 closeDialog AIS_Dialog;
 AIS_SelectedSupportType = nil;

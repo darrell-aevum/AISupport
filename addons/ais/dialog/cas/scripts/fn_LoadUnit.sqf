@@ -16,8 +16,10 @@
 	_respect = if (count _item > 3) then [{ _item select 3 }, {0}];
 	_requiredGear = if (count _item > 4) then [{_item select 4 }, {[]}]; 
 	  
-	_playerTabs = player getVariable ["ExileLocker", 999999];
-	_playerRespect = player getVariable ["ExileScore", 999999];
+	_playerLocker = player getVariable ["ExileLocker", 99];
+	_playerMoney = player getVariable ["ExileMoney", 99999];      
+	_playerTabs = _playerLocker + _playerMoney;		    
+	_playerRespect = ExileClientPlayerScore; 
   
 	_textCbo = ((findDisplay AIS_Dialog) displayCtrl (AIS_Dialog_Cas_UnitDescription)); 
 	

@@ -25,7 +25,7 @@
 	if (_currentSelection == -1) exitWith {};
 	ctrlShow [AIS_Dialog_Resupply_AddItemToCrate, true];
 
-	_lockerMoney = player getVariable ["ExileLocker", 99];
+	_playerLocker = player getVariable ["ExileLocker", 99];
 	_playerMoney = player getVariable ["ExileMoney", 9999];        
 	_playerRespect = ExileClientPlayerScore;    
 
@@ -46,7 +46,7 @@
 	_text =  format[_text + "<t align='left'>Processing Fee:</t><t  color='#555555' align='right'><img  size='0.75' image='addons\ais\icons\poptab_ca.paa'/> %1</t><br/>", _itemMarkup];	 
 
 	_color = "#ffffff";
-	if(_lockerMoney + _playerMoney < _cost) then {
+	if(_playerLocker + _playerMoney < _cost) then {
 		ctrlShow [AIS_Dialog_BtnConfirm, false];		
 		ctrlShow [AIS_Dialog_BtnCancel, false];
 		ctrlShow [AIS_Dialog_BtnClose, true];		

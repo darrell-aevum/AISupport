@@ -6,14 +6,21 @@ if (isNull (_this select 0)) exitWith {};
 
 private ["_side","_paraSize","_paraName","_paraPos","_vic","_dropPos","_dropHeight","_pos","_classNameToDrop","_cargoPos","_cargoRelPos","_crate","_para"];
 _paraSize = 0; //0...small 1...medium (default) 2...big     //TODO: 0 - set other _cargoRelPos (parachute hits crate and disappears)
- 
+_inheritance = typeOf _vic call GetInheritance;
+
 _cargoPos = getPos _vic;
 sleep .1;
 
 _crate = createvehicle [_classNameToDrop, _cargoPos,[],0,"NONE"];		
 _crate setDir (direction _vic); 
-_crate setVelocity [(((velocity _vic) select 0) * .9 ),(((velocity _vic) select 1) * .9 ),((velocity _vic) select 2)];
 
+if("Plane" in _inheritance) then {	
+	_crate setVelocity [(((velocity _vic) select 0) * .35 ),(((velocity _vic) select 1) * .35 ),((velocity _vic) select 2) -25];
+}
+else {
+	_crate setVelocity [(((velocity _vic) select 0)),(((velocity _vic) select 1)),((velocity _vic) select 2)];		
+};
+ 
 clearMagazineCargoGlobal _crate; 
 clearWeaponCargoGlobal _crate; 
 clearItemCargoGlobal _crate; 
