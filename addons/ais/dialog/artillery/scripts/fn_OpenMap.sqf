@@ -16,8 +16,8 @@ _enemySides = [side player] call BIS_fnc_enemySides;
 _radius = 6000;
 _nearEnemies = allUnits select {_x distance player < _radius AND side _x in _enemySides};
 
-_markers = [];
-_groups = [];
+_markers = []; 
+
 while {dialog && alive player} do
 {
 	mapclick = false;
@@ -36,6 +36,7 @@ while {dialog && alive player} do
 	";
 
 
+	_groups = [];
 
 	{
 		deleteMarker _x;
@@ -48,28 +49,32 @@ while {dialog && alive player} do
 	_playerMarker setMarkerText (name player);
 
 	_markers = _markers + [_playerMarker];
-
-	setGroupIconsVisible [true,false]; //Show only 2D
-
-
+ 
 	{
-		_group =	group _x;
-		_group addGroupIcon ["b_inf"]; 
+		_group =	group _x; 
 		if(!(_group in _groups)) then {
 			_groups	 = _groups + [group _x];
 		};			 
 	} forEach _nearEnemies;
 
+
+	{
+		_markerName = format["AIS_Enemy_%1", _forEachIndex];
+		_marker = createMarker[_markerName, getPos player];
+		_marker setMarkerType 'b_inf';
+		_marker setMarkerSize[0.8, 0.8];
+		_marker setMarkerColor 'ColorRed';
+  
+		_markers = _markers + [_marker]; 		 
+	} forEach _groups;
+
+ 
+
 	if (!dialog || !alive player) exitWith {
 		{
 			deleteMarker _x;
 		} forEach _markers;
-
-		{			
-			clearGroupIcons _x;
-		} forEach _groups;
-
-		setGroupIconsVisible [false,false];		
+  
 		onMapSingleClick "mapclick = false; false";  
 	};
 	sleep 0.123;
@@ -81,11 +86,6 @@ if (!dialog || !alive player) exitWith {
 	{
 		deleteMarker _x;
 	} forEach _markers;
-
-	{			
-		clearGroupIcons _x;
-	} forEach _groups;
-
-	setGroupIconsVisible [false,false];		
+  
 	onMapSingleClick "mapclick = false; false";  
 }; 
