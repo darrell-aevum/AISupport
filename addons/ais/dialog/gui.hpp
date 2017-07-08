@@ -527,8 +527,8 @@ class AISDialog
 			class UnitListBox: RscListBox
 			{
 				idc = 2403;
-				onLBSelChanged  = "[] spawn AIS_Dialog_Reinforcements_fnc_UnitChanged;";
-				onLBDblClick   = "[_this select 1] spawn AIS_Dialog_Reinforcements_fnc_AddUnitToCargo;";
+				onLBSelChanged  = "[_this] spawn AIS_Dialog_Reinforcements_fnc_UnitChanged;";
+				onLBDblClick   = "[_this] spawn AIS_Dialog_Reinforcements_fnc_AddUnitToCargo;";
 				colorText[] = {1,1,1,1};
 				colorDisabled[] = {1,1,1,0.25};
 				colorScrollbar[] = {1,0,0,0};
@@ -542,7 +542,7 @@ class AISDialog
 				w = 0.2245 * safezoneW;
 				h = 0.1250 * safezoneH;
 			};	 		
-			class UnitDescription: RscStructuredText
+			class UnitDescriptionTxt: RscStructuredText
 			{
 				idc = 2404;
 				colorText[] = {1,1,1,1};
@@ -571,7 +571,7 @@ class AISDialog
 				onMouseButtonDown = "";
 				onMouseButtonUp = "";
 				onMouseZChanged = "";
-				text = "Cargo:";
+				text = "PAX:";
 			};				
 			class CargoListBox: RscListBox
 			{
@@ -589,7 +589,7 @@ class AISDialog
 				x = 0.5475;
 				y = 0.056;
 			    w = 0.2250 * safezoneW;
-				h = 0.145 * safezoneH; 
+				h = 0.100 * safezoneH; 
 			};		
 			class LblInsertionMethod: RscStructuredText
 			{
@@ -599,7 +599,7 @@ class AISDialog
 				shadow = 0.75;
 				x = 0.5475;
 				w = 0.2250 * safezoneW;
-				y = 0.410;			     
+				y = 0.315;			     
 				h = 0.025 * safezoneH;
 				onMouseButtonDown = "";
 				onMouseButtonUp = "";
@@ -621,7 +621,7 @@ class AISDialog
 			//	shadow = 0.75;
 				x = 0.5475;
 				w = 0.2250 * safezoneW;
-				y = 0.4560;				
+				y = 0.3610;				
 				h = 0.030 * safezoneH;
 			};		
 			class CargoTotalTxt: RscStructuredText
@@ -633,8 +633,8 @@ class AISDialog
 				size = 0.037;
 				x = 0.5475;
 				w = 0.2250 * safezoneW;
-				y = 0.520; 
-				h = 0.09 * safezoneH; 
+				y = 0.425; 
+				h = 0.145 * safezoneH; 
 				onMouseButtonDown = "";
 				onMouseButtonUp = "";
 				onMouseZChanged = "";
@@ -643,11 +643,11 @@ class AISDialog
 			class AddUnitToCargoBtn: RscShortcutButton
 			{  
 				idc = 2409;
-				text = "Add To Cargo";
+				text = "Add PAX";
 				colorBackground[] = {0.4,0.4,0.4,0.75}; 
 				colorBackground2[] = {0.4,0.4,0.4,1}; 
 				colorBackgroundFocused[] = {0.4,0.4,0.4,1};
-				onButtonClick  = "[lbCurSel AIS_Dialog_Resupply_TraderItems] call AIS_Dialog_Reinforcements_fnc_AddUnitToCargo";		
+				onButtonClick  = "[lbCurSel AIS_Dialog_Reinforcements_UnitListBox] call AIS_Dialog_Reinforcements_fnc_AddUnitToCargo";		
 				x = 0.180;
 				y = 0.63;			
 				w = 0.1475 * safezoneW;
@@ -656,13 +656,13 @@ class AISDialog
 			class btnRemoveFromCrate: RscShortcutButton
 			{  
 				idc = 2410;
-				text = "Remove From Cargo";
+				text = "Remove PAX";
 				colorBackground[] = {0.4,0.4,0.4,0.75}; 
 				colorBackground2[] = {0.4,0.4,0.4,1}; 
 				colorBackgroundFocused[] = {0.4,0.4,0.4,1};
-				onButtonClick  = "[lbCurSel AIS_Dialog_Resupply_CrateList] call AIS_Dialog_Reinforcements_fnc_RemoveUnitFromCargo;";		
+				onButtonClick  = "[lbCurSel AIS_Dialog_Reinforcements_CargoListBox] call AIS_Dialog_Reinforcements_fnc_RemoveUnitFromCargo;";		
 				x = 0.7250;
-	        	y = 0.335;			
+	        	y = 0.255;			
 				w = 0.1435 * safezoneW;
 					h = 0.0305 * safezoneH;
 			};	   								

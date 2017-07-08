@@ -29,11 +29,11 @@
 	//[Class Name, Description, Cost, Respect, Required Items, RespectEarned, Spawn Positions]	
 
 	AIS_Reinforcements_Insertion_Vehicles = [
-		["uns_h21c", "", 500, 500, ["ItemRadio"], 5],
-		["uns_UH1D_m60", "", 1000, 1500, ["ItemRadio"], 10],		  
+		["uns_h21c", "", 500, 500, ["ItemRadio"], 5, _nam2_heli_spawns],
+		["uns_UH1D_m60", "", 1000, 1500, ["ItemRadio"], 10, _nam2_heli_spawns],		  
 		["uns_ach47_m134", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns],			
-		["uns_ch34_sog", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns],
-		["uns_UH1D_m60", "", 3500, 10000, ["ItemRadio", "SmokeShell"], 20]
+		["uns_ch47_m60_army", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns],			
+		["uns_ch34_sog", "", 2500, 5000, ["ItemRadio", "SmokeShell"], 15, _nam2_heli_spawns]
 	];
 
 	// [Class, Description, Cost, Rep, Required Items, Respect Earned / Lost]

@@ -58,10 +58,12 @@ AIS_Dialog_Resupply_AddItemToCrate = 2509;
 AIS_Dialog_Reinforcements = 2400; 
 AIS_Dialog_Reinforcements_SoldierOrSquadCombo = 2401;
 AIS_Dialog_Reinforcements_UnitListBox = 2403; 
-AIS_Dialog_Reinforcements_TraderItemDescription = 2404; 
+AIS_Dialog_Reinforcements_UnitDescriptionTxt = 2404; 
 AIS_Dialog_Reinforcements_CargoListBox = 2405; 
 AIS_Dialog_Reinforcements_InsertiontVehicleListBox = 2406;  
-AIS_Dialog_Reinforcements_AddUnitToCargoTxt = 2507; 
+AIS_Dialog_Reinforcements_CargoTotalTxt = 2407; 
+AIS_Dialog_Reinforcements_AddUnitToCargoBtn = 2409; 
+
 CALLFILE("addons\ais\dialog\scripts\fn_DropdownLists.sqf");
 
 AIS_Poptab_Icon = "addons/ais/icons/poptab_ca.paa";

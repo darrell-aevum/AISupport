@@ -1,27 +1,46 @@
   	
-	params ["_selectedIndex"];
-	disableSerialization;
-  
+	params ["_selected"];
+	private ["_playerLocker","_playerMoney","_playerTabs","_playerRespect","_data","_value","_picture","_text",
+			 "_selectedUnitTypeIndex","_unitType","_unit", "_cost", "_requiredRespect", "_description"];
+	
+	disableSerialization;  
+ 
+	_selectedIndex = _selected select 1;
+
 	_playerLocker = player getVariable ["ExileLocker", 99];
 	_playerMoney = player getVariable ["ExileMoney", 99999];      
 	_playerTabs = _playerLocker + _playerMoney;		    
 	_playerRespect = ExileClientPlayerScore; 
 
-	//Crate List Item
-	_data = lbData [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
-	_value = lbValue [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
-	_picture = lbPicture [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
-	_text = lbText [AIS_Dialog_Resupply_TraderItems, _selectedIndex];	  
+	_cost = 0;
+	_requiredRespect = 0;
+	_description = "";			
+	_unit = [];
 
-	//Crate Item
-  	_currentSelection = lbCurSel AIS_Dialog_Resupply_TraderItems; 
- 	_retail = getNumber (missionconfigfile >> "CfgExileArsenal" >> _data >> "price");	 
-	_itemMarkup = round(_retail * AIS_Resupply_ItemMarkup);
-	_cost = round (_itemMarkup + _retail);
-	_quality = getNumber (missionconfigfile >> "CfgExileArsenal" >> _data >> "quality");
-    _respect = getNumber ((missionconfigfile >> "CfgTrading" >> "requiredRespect") select _quality);
-	
-	if(_playerRespect < _respect) exitWith{};
+	//Selected Unit
+
+	_value = _selectedIndex;	  
+	_picture = lbPicture [AIS_Dialog_Reinforcements_UnitListBox, _selectedIndex];	  
+	_text = lbText [AIS_Dialog_Reinforcements_UnitListBox, _selectedIndex];	  
+ 
+	_selectedUnitTypeIndex =  lbCurSel AIS_Dialog_Reinforcements_SoldierOrSquadCombo;    
+
+	_unitType = lbData [AIS_Dialog_Reinforcements_SoldierOrSquadCombo, _selectedUnitTypeIndex];
+ 	_data = _unitType;
+
+	if(_unitType == "Soldier") then {		
+		_unit = AIS_Reinforcements_Insertion_Soldiers select _selectedIndex;    		
+	}
+	else {
+		_unit = AIS_Reinforcements_Insertion_Squads select _selectedIndex; 
+	};
+	 
+	_description = if (count _unit > 1) then [{_unit select 1 }, {""}];						 			
+	_cost = if (count _unit > 2) then [{_unit select 2 }, {0}];	
+	_requiredRespect = if (count _unit > 3) then [{_unit select 3 }, {0}];				   					
+
+
+	if(_playerRespect < _requiredRespect) exitWith{};
 	if(_playerTabs < _cost) exitWith{};
 
 
@@ -29,74 +48,13 @@
 	ctrlShow [AIS_Dialog_BtnCancel, true];
 	ctrlShow [AIS_Dialog_BtnClose, false];		
 
- 	_crateList = ((findDisplay AIS_Dialog) displayCtrl (AIS_Dialog_Resupply_CrateList));		 
+ 	_cargoListBox = ((findDisplay AIS_Dialog) displayCtrl (AIS_Dialog_Reinforcements_CargoListBox));		 
 
-	_crateList lbAdd(_text);		 
-	_crateList lbSetData[(lbSize _crateList)-1,  _data];
-	_crateList lbSetValue[(lbSize _crateList)-1,  _value];
-	_crateList lbSetPicture[(lbSize _crateList)-1,  _picture];
+	_cargoListBox lbAdd(_text);		 
+	_cargoListBox lbSetData[(lbSize _cargoListBox)-1,  _data];
+	_cargoListBox lbSetValue[(lbSize _cargoListBox)-1,  _value];
+	_cargoListBox lbSetPicture[(lbSize _cargoListBox)-1,  _picture];
 
-	lbSetCurSel [AIS_Dialog_Resupply_CrateList, (lbSize _crateList)-1];
- 
-	_crateCost = 0;
-  	_totalCost = 0;
-
-	for "_i" from 0 to (lbSize _crateList - 1) do {
-		_value = _crateList lbValue _i;
-		_crateCost = _crateCost + _value;
-	};	 
-	_totalCost = _totalCost + _crateCost;
-
-
-
-	_deliveryVehicleIndex = lbCurSel AIS_Dialog_Resupply_DeliveryVehicle;           
-	_selectedDeliveryVic = AIS_Resupply_Delivery_Vehicles select _deliveryVehicleIndex;
-
-	_deliveryVicCost = if (count _selectedDeliveryVic > 2) then [{_selectedDeliveryVic select 2 }, {100}];
-	_deliveryVicRespect = if (count _selectedDeliveryVic > 3) then [{_selectedDeliveryVic select 3 }, {100}];
- 
-	_totalCost = _totalCost + _deliveryVicCost;
-
-	_textCbo = ((findDisplay AIS_Dialog) displayCtrl (AIS_Dialog_Resupply_CrateTotal)); 
-	_text = "";
-	 
- 
-	_color = "#ffffff";
-	if(_playerTabs < _deliveryVicCost) then {
-		ctrlShow [AIS_Dialog_BtnConfirm, false];		
-		ctrlShow [AIS_Dialog_BtnCancel, false];
-		ctrlShow [AIS_Dialog_BtnClose, true];		
-		_color = "#FF0000";
-	};
-	_text = format[_text + "<t align='left'>Delivery Vehiclal Cost:</t><t color='%2' align='right'><img  size='0.65' image='addons\ais\icons\poptab_ca.paa'/> %1</t><br/>", _deliveryVicCost, _color];
-
-	_color = "#ffffff";
-	if(_playerRespect < _deliveryVicRespect) then {				
-		ctrlShow [AIS_Dialog_BtnConfirm, false];		
-		ctrlShow [AIS_Dialog_BtnCancel, false];
-		ctrlShow [AIS_Dialog_BtnClose, true];		
-		_color = "#FF0000";
-	};	
-	_text = format[_text + "<t align='left'>Delivery Vehicle Respect:</t><t color='%2' align='right'><img  size='0.75' image='addons\ais\icons\respect.paa'/> %1</t><br/>", _deliveryVicRespect, _color];	    
-
- 
-	_color = "#ffffff";
-	if(_playerTabs < _crateCost) then {
-		ctrlShow [AIS_Dialog_BtnConfirm, false];		
-		ctrlShow [AIS_Dialog_BtnCancel, false];
-		ctrlShow [AIS_Dialog_BtnClose, true];		
-		_color = "#FF0000";
-	};
-	_text = format[_text + "<t align='left'>Crate Cost:</t><t color='%2' align='right'><img  size='0.65' image='addons\ais\icons\poptab_ca.paa'/> %1</t><br/>", _crateCost, _color];
-
-	_color = "#ffffff";
-	if(_playerTabs < _totalCost) then {
-		ctrlShow [AIS_Dialog_BtnConfirm, false];		
-		ctrlShow [AIS_Dialog_BtnCancel, false];
-		ctrlShow [AIS_Dialog_BtnClose, true];		
-		_color = "#FF0000";
-	};
-	_text = format[_text + "<t align='left'>Total Cost:</t><t color='%2' align='right'><img  size='0.65' image='addons\ais\icons\poptab_ca.paa'/> %1</t><br/>", _totalCost, _color];
- 	
-	_textCbo ctrlSetStructuredText  parseText  _text;
-	
+	lbSetCurSel [AIS_Dialog_Reinforcements_CargoListBox, (lbSize _cargoListBox)-1];
+  
+	[] call AIS_Dialog_Reinforcements_fnc_CargoChanged;

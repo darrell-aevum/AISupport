@@ -1,16 +1,16 @@
 params ["_selected"];
-private ["_type", "_description", "_cost", "_respect", "_requiredGear"];
+private ["_unitType", "_description", "_cost", "_respect", "_requiredGear"];
 
 	disableSerialization;
  	
 
-	_type = lbData [AIS_Dialog_Reinforcements_SoldierOrSquadCombo, _selected select 1];
+	_unitType = lbData [AIS_Dialog_Reinforcements_SoldierOrSquadCombo, _selected select 1];
 	private["_data","_label","_picture"];
 
 	_unitListBox = ((findDisplay AIS_Dialog) displayCtrl (AIS_Dialog_Reinforcements_UnitListBox));	
 	lbCLear _unitListBox;		
 
-	switch(_type) do {
+	switch(_unitType) do {
 		case "Soldier": {
 			{  	 		
 				_vehicleClass = _x select 0;
@@ -50,7 +50,7 @@ private ["_type", "_description", "_cost", "_respect", "_requiredGear"];
 				};
 		
 				_unitListBox lbAdd(_label);
-				_unitListBox lbSetData[_forEachIndex,  _data];			
+				_unitListBox lbSetData[_forEachIndex,  _data];
 				_unitListBox lbSetPicture[_forEachIndex, _picture];	
 			} forEach AIS_Reinforcements_Insertion_Soldiers; 
 		};

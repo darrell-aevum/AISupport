@@ -31,8 +31,27 @@
 
 	_insertionVehicleListBox = ((findDisplay AIS_Dialog) displayCtrl (AIS_Dialog_Reinforcements_InsertiontVehicleListBox));	
 	lbCLear _insertionVehicleListBox; 
+ 
+	{   
+		private ["_classname"];
 
- 	_units = AIS_Reinforcements_Insertion_Vehicles; 
+		_vehicleClass = _x select 0;	
+		
+		if (typename _vehicleClass == "STRING") then {			 			 
+			_classname = _vehicleClass;  			
+		} else {			
+			_classname = _vehicleClass select 0;
+		};
+ 
+		_crewSeats = [_classname, false] call BIS_fnc_crewCount; 
+		_totalSeats = [_classname, true] call BIS_fnc_crewCount; // Number of total seats: crew + non-FFV cargo/passengers + FFV cargo/passengers
+		_cargoSeats = _totalSeats - _crewSeats;
+
+		if(_cargoSeats <= 0) then {
+			AIS_Reinforcements_Insertion_Vehicles deleteAt _forEachIndex;
+		};
+	} forEach AIS_Reinforcements_Insertion_Vehicles; 
+ 
 	{  
 		//[Class Name, Description, Cost, Respect, Required Items, RespectEarned, Spawn Positions]
 		/*
@@ -76,10 +95,21 @@
 			};	
 		};
  
-		_insertionVehicleListBox lbAdd(_label);
-		_insertionVehicleListBox lbSetData[_forEachIndex,  _data];			
-		_insertionVehicleListBox lbSetPicture[_forEachIndex, _picture];		
-		
-	} forEach _units; 
+		_crewSeats = [_data, false] call BIS_fnc_crewCount; 
+		_totalSeats = [_data, true] call BIS_fnc_crewCount; // Number of total seats: crew + non-FFV cargo/passengers + FFV cargo/passengers
+		_cargoSeats = _totalSeats - _crewSeats;
+
+		if(_cargoSeats > 0) then {
+				_insertionVehicleListBox lbAdd(_label);
+				_insertionVehicleListBox lbSetData[_forEachIndex,  _data];			
+				_insertionVehicleListBox lbSetPicture[_forEachIndex, _picture];		
+		}
+		else {
+			AIS_Reinforcements_Insertion_Vehicles deleteAt _forEachIndex;
+		};
+	} forEach AIS_Reinforcements_Insertion_Vehicles; 
+
+
+
 
 	lbSetCurSel [AIS_Dialog_Reinforcements_InsertiontVehicleListBox, 0]; 
