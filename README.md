@@ -42,6 +42,7 @@
 		#include "addons\ais\cfgXM8.hpp"
 	};
 ```
+If you have the ExAd XM8 addon installed, skip this step.
 ```
 	class CfgExileCustomCode 
 	{
