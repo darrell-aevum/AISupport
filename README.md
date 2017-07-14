@@ -51,11 +51,11 @@
 4. Repackage the PBO and give it a shot.
 
 ## Configuration: 
-- You can change configuration settings in the ais\config.sqf for top level variables.
-- You can change app settings by browsing to ais\"app name"\mapConfigs\"map name.sqf"
+- Top Level Config Settings : addons\ais\config.sqf.
+- App Level Config Settings: addons\ais\"app name"\mapConfigs\"map name.sqf"
 
 ## Upcoming Features / Changes: 
 
-	- Add Reinforcements App.
-	- Add Resupply App.	
-	- Add instructions for Exad XM8 app.
+- Add Reinforcements App.
+- Add Resupply App.	
+- Add instructions for Exad XM8 app.
