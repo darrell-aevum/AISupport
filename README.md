@@ -26,22 +26,22 @@ class CfgPatches
 {
 	#include "addons\ais\cfgPatches.hpp"
 };
-'''
-'''
+```
+```
 class CfgFunctions
 {
 	#include "addons\ais\cfgFunctions.hpp"
 }
-'''
+```
 class CfgXM8
 {	
 	extraApps[] = {"AIS_Artillery", "AIS_CAS"};
 	#include "addons\ais\cfgXM8.hpp"
 };
-'''
+```
 class CfgExileCustomCode 
 {
 	#include "addons\ais\cfgExileCustomCode.hpp"	
 };
-'''
+```
 4. Repackage the PBO and give it a shot.
