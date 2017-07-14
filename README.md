@@ -56,12 +56,13 @@ If you have the ExAd XM8 addon installed, skip this step.
 - App Level Config Settings: addons\ais\\"app name"\mapConfigs\\"map name.sqf"
 
 ## Upcoming Features / Changes: 
-
 - Add Reinforcements App.
 - Add Resupply App.	
 - Add instructions for Exad XM8 app.
 - Need to refine the configuration settings (Cost and Required Respect mostly)
+- Push to Master and update Exile Forum with new link and instructions.
 
 ## Known Issues
 
 ## Any and all assistance, ideas, and opinions are welcome.
+Feel free to contact me with your ideas. If you would like to help develop this addon, even beter!
