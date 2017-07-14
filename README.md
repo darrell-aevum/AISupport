@@ -60,3 +60,8 @@ If you have the ExAd XM8 addon installed, skip this step.
 - Add Reinforcements App.
 - Add Resupply App.	
 - Add instructions for Exad XM8 app.
+- Need to refine the configuration settings (Cost and Required Respect mostly)
+
+## Known Issues
+
+## Any and all assistance, ideas, and opinions are welcome.
