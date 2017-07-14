@@ -53,7 +53,7 @@ If you have the ExAd XM8 addon installed, skip this step.
 
 ## Configuration: 
 - Top Level Config Settings : addons\ais\config.sqf.
-- App Level Config Settings: addons\ais\"app name"\mapConfigs\"map name.sqf"
+- App Level Config Settings: addons\ais\\"app name"\mapConfigs\\"map name.sqf"
 
 ## Upcoming Features / Changes: 
 
