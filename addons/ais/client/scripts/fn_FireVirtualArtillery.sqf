@@ -4,13 +4,19 @@
  
 	Fires virtual artillery rounds.
 */
-
+ 
 params [
 	["_shellCount", 1],
 	["_shellType", "Sh_82mm_AMOS"],	
 	["_targetPosition", objNull, [objNull, []]], 
 	["_accuracy", 100]
 ];
+  
+_markerName = format["AIS_ARTILLERY_TARGET_%1",random(99999)];
+_marker = createMarker[_markerName, _targetPosition];
+_marker setMarkerType 'mil_destroy';
+_marker setMarkerSize[0.8, 0.8];
+_marker setMarkerColor 'ColorRed';
 
 
 _sleep = round random [10, 20, 45];  
@@ -20,6 +26,7 @@ _sleep = round random [10, 20, 45];
 		format["Artillery inbound you your requested position. ETA %1 seconds.", _sleep]
 	]
 ] call ExileClient_gui_toaster_addTemplateToast; 
+
 sleep _sleep;
 
 for "_index" from 1 to _shellCount do {
@@ -35,4 +42,5 @@ for "_index" from 1 to _shellCount do {
  
 };
 
-deleteMarker 'AIS_TARGET';
+sleep 5;
+deleteMarker _marker;

@@ -65,29 +65,34 @@ IsItemInInventory = {
 		false;
 	};
 
-	private _hasItem = true;
+	private _hasItem = false;
 
     _playerItems = []; 	 
     _playerItems = _playerItems + items player;
     _playerItems = _playerItems + magazines player;
     _playerItems = _playerItems + weapons player;
     _playerItems = _playerItems + assignedItems player;
-  
+   
 	switch (_item) do {
-		case "SmokeShell": { 		   	 
-			_hasItem = false;
-			_smokeShells = ["SmokeShell","SmokeShellRed","SmokeShellGreen","SmokeShellYellow","SmokeShellPurple","SmokeShellBlue","SmokeShellOrange"];
-			{					
-				if (_x in _smokeShells) then {
+		case "SmokeShell": {  
+			{
+				if(_x == "SmokeShell") then {
 					_hasItem = true;
-				};								
-			} foreach _magazines; 
+				}
+				else {
+					_inheritance = _x call GetInheritance;					
+					_type = _inheritance select (count _inheritance - 2);
+					if(_type == "SmokeShell") then {
+						_hasItem = true;
+					};
+				};
+			} foreach _playerItems;
 		};    
 		default {   
-			if !(_item in _playerItems) then {
-				_hasItem = false;
+			if (_item in _playerItems) then {
+				_hasItem = true;
 			};			 
 		};
-	}; 	  
+	}; 	   
 	_hasItem
 };  

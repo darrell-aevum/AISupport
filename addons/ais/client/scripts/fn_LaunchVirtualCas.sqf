@@ -1,32 +1,27 @@
 	private ["_marker", "_airVic"];
 	params [
-		["_aircraftType", "B_Plane_CAS_01_F"],
-		["_spawnPostitions", []],
-		["_duration", 35],	
-		["_targetPosition", objNull, [objNull, []]],
-		["_radius", 50, [0]],
-		["_dir", random 360, [0]],
-		["_height", 0, [0]]
+		["_unitName", "Unknown"],
+		["_spawnProperties", []],
+		["_duration", 120]
+		
 	];
 	_callSign = "Falcon 3-1";
 	 
-	_airVic = [_aircraftType, AIS_Cas_IncludePrimaryMapSpawnPoints, AIS_Cas_IncludeSecondaryMapSpawnPoints, _spawnPostitions] call AIS_Client_fnc_CreateAirVehicle;
-   	
+	_airVic = _spawnProperties call AIS_Client_fnc_CreateAirVehicle;
+ 
 	_vic = _airVic select 0;
-	_group = group _vic;
   
-	_vic doMove (position player);
-	
+ 
 	["successTitleAndText",    
 		[
 			"AI Support - CAS",  
-			format["Close Air Support is in route."]
+			format["%1 CAS is in route.", _unitName]
 		]
 	] call ExileClient_gui_toaster_addTemplateToast; 
 	
 	//Add Marker
-	if(AIS_Resupply_MarkCrateOnMap) then {
-		_markerName = format["AIS_Cas_Vic_%1", random 99999];
+	if(true) then {
+		_markerName = format["AIS_Cas_Vic_%1_%2", _unitName, random(99999)]; 
 		[_vic, _markerName] spawn {
 			params ["_vic","_markerName"];	 
 			_marker = createMarker[_markerName, getPos _vic]; 
@@ -38,36 +33,22 @@
 				_marker setMarkerColor 'ColorGreen';
 				if(!alive _vic) then {
 					_marker setMarkerColor 'ColorRed';
-				};	
-				_marker setMarkerText ' CAS'; 
+				};					
+				_marker setMarkerText  " AIS CAS";
 				sleep .2;
 			};		
 			deleteMarker _marker;
 		};
 	}; 
- 
-	//Wait for vic to get close
- 	_inheritance = _aircraftType call GetInheritance;
- 	if("Plane" in _inheritance) then {		
-		waitUntil{(_vic distance2D (getPos player)) <= 2000};  	 	
+  
+	{ [_x] join (group player); } forEach (crew _vic);
 
-	};
-	if("Helicopter" in _inheritance) then {
-		waitUntil{(_vic distance2D (getPos player)) <= 1250};  	 	
-	};
- 	 
 	_spawnProperties = _airVic select 1; 
 
-[_vic,_spawnProperties] spawn {
+[_vic, _spawnProperties] spawn {
 	params["_vic", "_spawnProperties"];
 	while{!isNull _vic && alive _vic && getDammage _vic < .8 && !(_vic getVariable ["missionComplete", false]) && alive player} do {				
-		_wp = group _vic addWaypoint [getPos player, 0]; 
-		_wp setWaypointType "SAD"; 
-		_wp setWaypointBehaviour "COMBAT";
-		_wp setWaypointCombatMode "RED";
-		group _vic setCurrentWaypoint _wp; 
-		sleep 5;
-		deleteWaypoint _wp;
+ 
 	};
 
 	if(!alive _vic || isNull _vic) exitwith {		
@@ -84,31 +65,14 @@
 		]
 	] call ExileClient_gui_toaster_addTemplateToast; 
 
-	(group _vic) setCombatMode "BLUE";
+	_group = createGroup AIS_Side;
+	[_vic] join _group; 	 
+	_vic setCombatMode "BLUE";
  
 	sleep 3;
-
-	_lz = _spawnProperties select 0;
-	_vic doMove _lz;
-	
-	waitUntil {isnull _vic || getDammage _vic >= .8 || unitReady _vic };
-	if(isnull _vic) exitwith{};
-	if(getDammage _vic >= .8) exitwith {
-		_vic setDamage  1;
-	};
-
-	_special = if (count _spawnProperties > 3) then [{_spawnProperties select 3 }, {"NONE"}];
-	if(_special == "FLY") then {
-		{ deleteVehicle _x } forEach (crew _vic); deleteVehicle _vic;
-	}
-	else {
-		_vic land "LAND";	
-		waitUntil {isnull _vic || isTouchingGround _vic};
-		_vic engineOn false;
-		_vic setFuel 0;
-		sleep 10;
-		{ deleteVehicle _x } forEach (crew _vic); deleteVehicle _vic;		 					 
-	}   
+	_special = if (count _spawnProperties > 4) then [{_spawnProperties select 4 }, {"NONE"}];
+	_finalDestination = if (count _spawnProperties > 1) then [{_spawnProperties select 1 }, {"NONE"}];
+	[_vic, _finalDestination, _special] spawn AIS_Client_fnc_AirVicRTB;	 
 };
  
 

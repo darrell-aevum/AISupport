@@ -4,8 +4,7 @@
 		"_player",
 		["_delay", 10]
 	];
-
-	//"monitoring started" remoteExec ["systemchat", _player]; 
+ 
  
 	params["_vic","_player",["_delay", 10]];
 	

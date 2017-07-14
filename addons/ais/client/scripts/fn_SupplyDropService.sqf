@@ -1,5 +1,5 @@
 private["_vic","_vicStartingPosition", "_dropType", "_destination", "_driver", "_flyHeight", "_markerType", "_airVic"];
-params["_items", "_vicClass", ["_spawnPostitions", []]];
+params["_items", "_vicClass", ["_spawnPostitions", []], ["_requiredGear", []]];
 
 _inheritance = _vicClass call GetInheritance;
 _group = createGroup INDEPENDENT;
@@ -9,12 +9,38 @@ _flyHeight = 200;
 _markerType = "b_plane";
 _markerText = " Supply Plane";
 
+if("SmokeShell" in _requiredGear) then {
+	_reinforcementRequest = player addEventHandler ["Fired", {  
+		_isSmoke = false;
+		_magazineType = _this select 4;
+		if(_magazineType == "SmokeShell") then {
+			_isSmoke = true;
+		}
+		else {
+			_inheritance = _magazineType call GetInheritance;					
+			_type = _inheritance select (count _inheritance - 2);
+			if(_type == "SmokeShell") then {
+				_isSmoke = true;
+			};
+		};
+
+		if(_isSmoke) then {
+			[_this select 6] spawn {
+				_smoke = _this select 0;  				
+				sleep 4;
+				smokeOut = true; 	
+				player setVariable["AIS_smoke_out", true];
+				player setVariable["AIS_smoke_position", getPosASL  _smoke]; 
+			}			
+		}
+	}];
+};
+
 _destination = [position player, (random [5, 10 ,25]), (random 360)] call BIS_fnc_relPos;   
 
 	_posarray = [];		
 	_airfields = [];	
-	_selectedAirfield = 0; 
-//	{systemchat str _x} count allVariables player;
+	_selectedAirfield = 0;  
 
 if("Land" in _inheritance) then {
 	_dropType = "Land";
@@ -39,6 +65,11 @@ if("Air" in _inheritance) then {
 	_vic = _airVic select 0; 
 }; 
 
+_vic = _airVic select 0;
+_spawnProperties = _airVic select 1; 
+_finalDestination = _spawnProperties select 0;	
+_special = if (count _spawnProperties > 3) then [{_spawnProperties select 3 }, {"NONE"}];	
+
 _vic setVehicleLock "LOCKED"; 
 _vic setVariable ["missionComplete", false];
 
@@ -54,13 +85,19 @@ _vic setVariable ["missionComplete", false];
 };
  
 if("Plane" in _inheritance) then { 
-	_vic flyInHeight 200;
+	_vic flyInHeight 200; 
+}; 
+
+if("SmokeShell" in _requiredGear) then {
+	_wp = group _vic addWaypoint [getPos player, 0]; 
+	_wp setWaypointType "LOITER"; 	
+	_wp setWaypointCombatMode "BLUE";
+	group _vic setCurrentWaypoint _wp; 		
+} else {
 	_vic doMove _destination;
-}; 
-if("Helicopter" in _inheritance) then {  
-	[_vic, getPosASL player, 30] spawn AIS_Client_fnc_DoCombatHover;
-}; 
-  
+};
+	
+
 ["successTitleAndText",    
 	[
 		"AI Support - Resupply",  
@@ -90,21 +127,75 @@ if(AIS_Cas_TrackAircraftOnMap) then {
 	};
 }; 
  
-if("Helicopter" in _inheritance) then { 
-	waitUntil {isnull _vic ||  getDammage _vic == 1 || _vic getVariable ["AIS_Combat_Hovering", false]}; 
-	 
+if("SmokeShell" in _requiredGear) then { 
+	[_airVic] spawn {
+		params["_airVic"];
+		_vic = _airVic select 0;
+		_spawnProperties = _airVic select 1; 
+		_finalDestination = _spawnProperties select 0;		
+		_special = if (count _spawnProperties > 3) then [{_spawnProperties select 3 }, {"NONE"}];		
+
+		_count = 0;
+		while {!isnull _vic && alive _vic && (_vic distance2D (getPos player) <= 1500) && !(player getVariable["AIS_smoke_out", false]);} do {
+			["infoTitleAndText",    
+				[
+					"AI Support - Resupply",  
+					format["Supply aircraft is on location. They need some smoke to drop the package.."]
+				]				
+			] call ExileClient_gui_toaster_addTemplateToast; 
+			sleep 25;						
+			if(_count > 5 && !isnull _vic && alive _vic && !(player getVariable["AIS_smoke_out", false])) then {
+				_vic setVariable ["missionComplete", true];		 
+				[_vic, _finalDestination, _special] spawn AIS_Client_fnc_AirVicRTB;	
+
+				["errorTitleAndText",    
+					[
+						"AI Support - Resupply",  
+						format["The supply aircraft is low on fuel and has to return to base."]
+					]				
+				] call ExileClient_gui_toaster_addTemplateToast; 						
+			};
+			_count = _count + 1;
+		};
+	};
+
+	waitUntil {isnull _vic ||  getDammage _vic == 1 || player getVariable["AIS_smoke_out", false]};  		
+	sleep 4;
+	//player setVariable["AIS_smoke_out", true];
+ 
+	_smokePosition = player getVariable["AIS_smoke_position", nil]; 
+	_wp1 = group _vic addWaypoint [_smokePosition, 0]; 
+	_wp1 setWaypointType "Move"; 	
+	_wp1 setWaypointCombatMode "BLUE"; 
+	_vic setVariable['AIS_supply_items', _items];
+	_wp1 setWaypointScript "
+		hint 'hello'; 
+	";
+ 
+	group _vic setCurrentWaypoint _wp1;
+
+	_vic setVariable ["missionComplete", true];		 
+
+	
 } else {
 	waitUntil {isnull _vic ||  getDammage _vic == 1 || !alive player || unitReady _vic };
-};
+	if(isnull _vic) exitwith{};
+	[_vic, 'Box_NATO_Wps_F', _dropType,  _items] spawn AIS_Client_fnc_SupplyDrop;	
+}; 
 
-if(isnull _vic) exitwith{};
+ 
 if(getDammage _vic >= .8) exitwith {
 	_vic setDamage  1;
 };
 
-[_vic, 'Box_NATO_Wps_F', _dropType,  _items] spawn AIS_Client_fnc_SupplyDrop;
- sleep 3;
+sleep 3;
 _vic setVariable ["missionComplete", true];
+
+while {(count (waypoints (group _vic))) > 0} do
+{
+	deleteWaypoint ((waypoints (group _vic)) select 0);
+};		
+
 
 switch(_dropType) do {
 	case "Land": {
@@ -118,35 +209,9 @@ switch(_dropType) do {
 		deleteVehicle _driver;
 		deleteVehicle _vic;				
 	};
-	case "Air": {
-		_spawnProperties = _airVic select 1; 
-		sleep 3;
-
-		_lz = _spawnProperties select 0;
-		_vic doMove _lz;
-		
-		waitUntil {isnull _vic || getDammage _vic >= .8 || unitReady _vic };
-		if(isnull _vic) exitwith{};
-		if(getDammage _vic >= .8) exitwith {
-			_vic setDamage 1;
-		};
-
+	case "Air": { 
 		_special = if (count _spawnProperties > 3) then [{_spawnProperties select 3 }, {"NONE"}];
-		if(_special == "FLY") then {
-			{ deleteVehicle _x } forEach (crew _vic); deleteVehicle _vic;
-		}
-		else {
-			_vic land "LAND";	
-			waitUntil {isnull _vic || getDammage _vic >= .8 || isTouchingGround  _vic };
-			if(isnull _vic) exitwith{};
-			if(getDammage _vic >= .8) exitwith {
-				_vic setDamage  1;
-			};
-			sleep 15;
-			_vic engineOn false;
-			sleep 5;
-			{ deleteVehicle _x } forEach (crew _vic); deleteVehicle _vic;		 					 
-		} 
+		[_vic, _finalDestination, _special] spawn AIS_Client_fnc_AirVicRTB;	
 	};
 };
  
