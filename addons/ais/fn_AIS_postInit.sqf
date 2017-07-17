@@ -21,5 +21,5 @@ if(!ExAd_Xm8_Installed) then {
 		if(isText(missionConfigFile >> "CfgXM8" >> _x >> "config"))then{
 			call compileFinal (preprocessFileLineNumbers getText(missionConfigFile >> "CfgXM8" >> _x >> "config"));
 		};
-	}forEach (getArray(missionConfigFile >> "CfgXM8" >> "extraApps"));
+	} forEach (getArray(missionConfigFile >> "CfgXM8" >> "extraApps"));
 };

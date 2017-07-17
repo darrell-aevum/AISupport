@@ -2,6 +2,7 @@
 	AIS_HQCallSign = "Pegusus 6";
 	AIS_Side = INDEPENDENT;
 	AIS_XM8_Slide_Theme = 0;	  //Army Theme Selected
+
 	AIS_XM8_Slide_Themes = [
 		//Army
 	 	[
