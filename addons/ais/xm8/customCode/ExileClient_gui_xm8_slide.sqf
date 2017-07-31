@@ -67,7 +67,5 @@ if !(ExileClientXM8CurrentSlide isEqualTo _toSlideName) then
 		_fromSlideControl ctrlSetPosition [(19 * 0.05), (0 * 0.05)];
 		_fromSlideControl ctrlCommit 0.25;
 	};
-	ExileClientXM8CurrentSlide = _toSlideName;
-
-	_display = uiNameSpace getVariable ["RscExileXM8", displayNull]; 
+	ExileClientXM8CurrentSlide = _toSlideName; 
 };

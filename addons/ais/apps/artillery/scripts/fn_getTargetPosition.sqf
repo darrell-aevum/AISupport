@@ -17,7 +17,7 @@ AIS_Apps_Artillery_GetTargetPosition = {
     _mapControl = _mapDisplay displayCtrl AIS_Dialog_Artillery_MapControl;
     _mapControl ctrlShow true; 
 
-    closeDialog 0; 
+	closeDialog 1;
   
     _enemySides = [side player] call BIS_fnc_enemySides;
     _radius = 600;
@@ -93,23 +93,22 @@ AIS_Apps_Artillery_GetTargetPosition = {
         };
         sleep 0.123;
     };
+
+    _mapControl ctrlShow false; 
  
     
-    _mapControl ctrlShow false; 
 
-   [] call ExileClient_gui_xm8_show; 
-
-        {
-            deleteMarker _x;
-        } forEach _markers;
+    {
+        deleteMarker _x;
+    } forEach _markers;
 
     mapclick = false;
     deleteMarker 'AIS_ARTILLERY_TARGET_TEMP';
 
-
-
     onMapSingleClick "mapclick = false; false";  
- 
+
+    [] call ExileClient_gui_xm8_show;
+
     [] call AIS_Apps_Artillery_UpdateTotalCost; 
 
     if (!alive player) exitWith {
@@ -118,4 +117,6 @@ AIS_Apps_Artillery_GetTargetPosition = {
         } forEach _markers;
         AIS_Dialog_Artillery_SelectedTargetPosition = nil;
     }; 
+    ///wtf
+
 };

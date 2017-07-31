@@ -21,7 +21,7 @@
 	class AIS_RESUPPLY
 	{
 		title = "AIS Resupply";
-		controlID = 90000;	//IDC:80000 -> 80011 || These need to be unique and out of range from each other 
+		controlID = 90000;	//IDC:90000 -> 90011 || These need to be unique and out of range from each other 
 		logo = "\A3\ui_f\data\map\VehicleIcons\iconparachute_ca.paa";
 		onLoad = "addons\ais\apps\cas\onLoad.sqf";
 		onOpen = "addons\ais\apps\cas\onOpen.sqf";
@@ -31,10 +31,10 @@
 	class AIS_Reinforcements
 	{
 		title = "AIS Reinforcements";
-		controlID = 100000;	//IDC:80000 -> 80011 || These need to be unique and out of range from each other 
+		controlID = 100000;	//IDC:100000 -> 100011 || These need to be unique and out of range from each other 
 		logo = "\a3\Ui_F_Curator\Data\Displays\RscDisplayCurator\modeGroups_ca.paa";
 		onLoad = "addons\ais\apps\reinforcements\onLoad.sqf";
 		onOpen = "addons\ais\apps\reinforcements\onOpen.sqf";
 		onClose = "addons\ais\apps\reinforcements\onClose.sqf";
 		config = "addons\ais\apps\reinforcements\config.sqf";
-	};		
+	}; 

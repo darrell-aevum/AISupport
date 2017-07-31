@@ -5,18 +5,18 @@ call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\artillery\scripts
 call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\artillery\scripts\fn_unitSelectionChanged.sqf"));
 call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\artillery\scripts\fn_updateTotalCost.sqf"));
 
-AIS_Dialog_Artillery_Slide = 70000;
-AIS_Dialog_Artillery_HeaderText = 70001;
-AIS_Dialog_Artillery_UnitListBox = 70002;
-AIS_Dialog_Artillery_UnitDescriptionText = 70003;
-AIS_Dialog_Artillery_UnitInfo = 70004;
-AIS_Dialog_Artillery_ShellTypeToFire = 70005;
-AIS_Dialog_Artillery_ShellCountToFire = 70006;
-AIS_Dialog_Artillery_MapButton = 70007;
-AIS_Dialog_Artillery_ConfirmButton = 70008;
-AIS_Dialog_Artillery_OverallDescriptionText = 70009;
-AIS_Dialog_Artillery_MapControl = 70010;
-AIS_Dialog_Artillery_MapCloseButton = 70011; 
+AIS_Dialog_Artillery_Slide = 70002;
+AIS_Dialog_Artillery_HeaderText = 70003;
+AIS_Dialog_Artillery_UnitListBox = 70004;
+AIS_Dialog_Artillery_UnitDescriptionText = 70005;
+AIS_Dialog_Artillery_UnitInfo = 70006;
+AIS_Dialog_Artillery_ShellTypeToFire = 70007;
+AIS_Dialog_Artillery_ShellCountToFire = 70008;
+AIS_Dialog_Artillery_MapButton = 70009;
+AIS_Dialog_Artillery_ConfirmButton = 70010;
+AIS_Dialog_Artillery_OverallDescriptionText = 700011;
+AIS_Dialog_Artillery_MapControl = 70012;
+AIS_Dialog_Artillery_MapCloseButton = 70013; 
 
 AIS_Dialog_Artillery_SelectedUnit = 0;
 AIS_Dialog_Artillery_SelectedShellType = 0;

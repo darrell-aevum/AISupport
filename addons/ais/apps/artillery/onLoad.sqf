@@ -1,6 +1,12 @@
 params["_display","_slide","_idc"]; 
 disableSerialization;
-  
+
+ _baseIDC = 70000;
+//ExAd hacky fix 	 
+
+ExAd_XM8_MAP_AIS_Artillery pushBack "BS";
+
+ 
 _pW = 0.025;
 _pH = 0.04;
 _bttonW = 0.15;
@@ -47,25 +53,26 @@ _textColor  =  _selectedTheme select 4;
 //////////////////////////////////////////////////// 
 
 //Slide Back
-_slideBack = _display ctrlCreate ["IGUIBack", _idc, _slide];
+_slideBack = _display ctrlCreate ["IGUIBack", -1, _slide];
 _slideBack ctrlSetPosition [_marginX, _marginY, _maxWidth, _maxHeight];
 _slideBack ctrlSetBackgroundColor _slideBackgroundColor;
 _slideBack ctrlEnable false;
 _slideBack ctrlCommit 0;
+
 
 //////////////////////////////////////////////////// 
 //         Panels                                 //
 //////////////////////////////////////////////////// 
 
 //Panel Left Back - Unit List
-_columnBackLeftUnitList = _display ctrlCreate ["IGUIBack", _idc, _slide];
+_columnBackLeftUnitList = _display ctrlCreate ["IGUIBack", -1, _slide];
 _columnBackLeftUnitList ctrlSetPosition [_columnLX, _columnY, _columnWidth, _columnHeight * .50];
 _columnBackLeftUnitList ctrlSetBackgroundColor _panelBackgroundColor;
 _columnBackLeftUnitList ctrlEnable false;
 _columnBackLeftUnitList ctrlCommit 0; 
 
 //Panel Left Back - Unit Description
-_columnBackLeftUnitDescription = _display ctrlCreate ["IGUIBack", _idc, _slide];
+_columnBackLeftUnitDescription = _display ctrlCreate ["IGUIBack", -1, _slide];
 _columnBackLeftUnitDescription ctrlSetPosition [
 	_columnLX, 
 	((_columnHeight * .50) + _columnY) + (_paddingH * 1.5), 
@@ -255,7 +262,7 @@ _overallDescriptionText ctrlCommit 0;
 //////////////////////////////////////////////////// 
  
 //Back Button 
-_backButton = _display ctrlCreate ["RscExileXM8ButtonMenu",_idc,_slide];
+_backButton = _display ctrlCreate ["RscExileXM8ButtonMenu",-1,_slide];
 _backButton ctrlSetPosition [(_staticButtonX - _bttonW) - (_paddingW * 3), _footerY, _bttonW, _bttonH];
 _backButton ctrlSetText "Cancel";
 _backButton ctrlSetEventHandler ["ButtonClick", "['extraApps', 1] call ExileClient_gui_xm8_slide;"];

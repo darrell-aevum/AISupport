@@ -50,6 +50,7 @@ if (ExileClientXM8CurrentSlide isEqualTo "party") then
 };
 
 call AIS_Client_fnc_CreateAisApps;
+
 {
 	_slideControlID = getNumber (_x >> "controlID");
 	_slideName = configName _x;

@@ -1,6 +1,11 @@
 params["_display","_slide","_idc"]; 
 disableSerialization;
-  
+
+ _baseIDC = 100000;
+//ExAd hacky fix 	 
+_key  = format["BS%1",-1]; 
+(_baseIDC + (ExAd_XM8_MAP_AIS_Reinforcements pushBack _key));
+
 _pW = 0.025;
 _pH = 0.04;
 _bttonW = 0.15;
