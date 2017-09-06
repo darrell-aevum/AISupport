@@ -1,9 +1,9 @@
-
-call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_closeMap.sqf"));
 call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_confirmMission.sqf"));
-call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_getSpawnPosition.sqf"));
-call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_openMap.sqf"));
+call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_addUnitToCargo.sqf"));
+call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_insertionTypeChanged.sqf"));
+call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_removeUnitFromCargo.sqf"));
 call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_unitSelectionChanged.sqf"));
+call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_unitTypeChanged.sqf"));
 call compileFinal (preprocessFileLineNumbers ("addons\ais\apps\reinforcements\scripts\fn_updateTotalCost.sqf"));
 
 AIS_Reinforcements_GROUP = createGroup AIS_Side;
@@ -14,18 +14,25 @@ AIS_Dialog_Reinforcements_HeaderText = 90001;
 AIS_Dialog_Reinforcements_UnitListBox = 90002;
 AIS_Dialog_Reinforcements_UnitDescriptionText = 90003;
 AIS_Dialog_Reinforcements_UnitInfoText = 90004;
-AIS_Dialog_Reinforcements_DurationComboBox = 90005;
-AIS_Dialog_Reinforcements_SpawnPositionsComboBox  = 90006;
-AIS_Dialog_Reinforcements_MapButton = 90007;
+AIS_Dialog_Reinforcements_UnitTypeComboBox = 90005;
+AIS_Dialog_Reinforcements_InsertionTypeComboBox  = 90006;
+AIS_Dialog_Reinforcements_InsertionVehicleComboBox = 90007;
 AIS_Dialog_Reinforcements_ConfirmButton = 90008;
 AIS_Dialog_Reinforcements_OverallDescriptionText = 90009;
 AIS_Dialog_Reinforcements_MapControl = 90010;
 AIS_Dialog_Reinforcements_SpawnListBox = 90011;
 AIS_Dialog_Reinforcements_MapCloseButton = 90012;
+AIS_Dialog_Reinforcements_SelectedUnitsListBox = 90013;
 
+
+AIS_Dialog_Reinforcements_SelectedUnitType = 0;
 AIS_Dialog_Reinforcements_SelectedUnit = 0;
+AIS_Dialog_Reinforcements_SelectedUnits = [];
 AIS_Dialog_Reinforcements_SelectedDuration = 0;
 AIS_Dialog_Reinforcements_SelectedSpawnPoint = 0;
+AIS_Dialog_Reinforcements_SelectedInsertionType = 0;
+AIS_Dialog_Reinforcements_SelectedInsertionVehicle = 0;
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //    Reinforcements Settings                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////

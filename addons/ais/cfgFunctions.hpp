@@ -18,9 +18,11 @@ class AIS_Client
 		class AirVicRTB {};
 		class AddAisApps {};
 		class AddPlayerActions {};  
-		class CreateAisApps {};				
+		class CreateAisApps {};
+		class CreateGroundVehicle {};
 		class CreateAirVehicle {};
 		class DoCombatHover {};
+		class EjectAndParachute {};
 		class FireVirtualArtillery {};
 		class LaunchVirtualCas {};
 		class PlayerMonitor {}; 	

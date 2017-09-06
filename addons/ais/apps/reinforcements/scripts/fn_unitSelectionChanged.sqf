@@ -1,18 +1,18 @@
-AIS_Apps_CAS_SelectionChanged = {   	
+AIS_Apps_Reinforcements_SelectionChanged = {   	
     _display = uiNameSpace getVariable ["RscExileXM8", displayNull]; 
-	ctrlEnable [AIS_Dialog_CAS_ConfirmButton, true];		
+	ctrlEnable [AIS_Dialog_Reinforcements_ConfirmButton, true];		
  
-   	_selectedUnitIndex = lbCurSel AIS_Dialog_CAS_UnitListBox;    
-    _unit = AIS_CAS_Units select _selectedUnitIndex;    
+   	_selectedUnitIndex = lbCurSel AIS_Dialog_Reinforcements_UnitListBox;    
+    _unit = AIS_Reinforcements_Units select _selectedUnitIndex;    
 
-    _class = lbData [AIS_Dialog_CAS_UnitListBox, _selectedUnitIndex];
+    _class = lbData [AIS_Dialog_Reinforcements_UnitListBox, _selectedUnitIndex];
   
 	_playerLocker = player getVariable ["ExileLocker", 0];
 	_playerMoney = player getVariable ["ExileMoney", 0];      
 	_playerTabs = _playerLocker + _playerMoney;		    
 	_playerRespect = ExileClientPlayerScore; 
 
-	_headerText = _display displayCtrl AIS_Dialog_CAS_HeaderText;    
+	_headerText = _display displayCtrl AIS_Dialog_Reinforcements_HeaderText;    
     _text = "<t align='left'>%2 - [%1]</t>";
     _text = format[_text + "<t align='right'><img  size='0.85' image='addons\ais\icons\respect.paa'/> %3   <img  size='0.75' image='addons\ais\icons\poptab_ca.paa'/> %4</t>",group player, profileName, _playerRespect,_playerTabs];
     _headerText ctrlSetStructuredText (parseText _text);
@@ -28,47 +28,47 @@ AIS_Apps_CAS_SelectionChanged = {
 
  
  	//Duration	
-    _durationComboBox = _display displayCtrl AIS_Dialog_CAS_DurationComboBox;  
+    _durationComboBox = _display displayCtrl AIS_Dialog_Reinforcements_DurationComboBox;  
     lbCLear _durationComboBox;  			
  
 	{
-		lbAdd [AIS_Dialog_CAS_DurationComboBox, format["%1 Minutes", (_x select 0)]];
-		lbSetValue [AIS_Dialog_CAS_DurationComboBox, _forEachIndex, (_x select 0)*60];
+		lbAdd [AIS_Dialog_Reinforcements_DurationComboBox, format["%1 Minutes", (_x select 0)]];
+		lbSetValue [AIS_Dialog_Reinforcements_DurationComboBox, _forEachIndex, (_x select 0)*60];
 	} forEach _durations;
 
-	if(AIS_Dialog_CAS_SelectedUnit != _selectedUnitIndex) then {
-		AIS_Dialog_CAS_SelectedDuration = 0;
+	if(AIS_Dialog_Reinforcements_SelectedUnit != _selectedUnitIndex) then {
+		AIS_Dialog_Reinforcements_SelectedDuration = 0;
 	};
-	lbSetCurSel [AIS_Dialog_CAS_DurationComboBox, AIS_Dialog_CAS_SelectedDuration];
+	lbSetCurSel [AIS_Dialog_Reinforcements_DurationComboBox, AIS_Dialog_Reinforcements_SelectedDuration];
 
 	//Spawn
-    _departFromComboBox = _display displayCtrl AIS_Dialog_CAS_SpawnPositionsComboBox; 	 	
+    _departFromComboBox = _display displayCtrl AIS_Dialog_Reinforcements_SpawnPositionsComboBox; 	 	
     lbCLear _departFromComboBox; 	
  	
-	lbAdd [AIS_Dialog_CAS_SpawnPositionsComboBox, "Nearest Patrolling Unit"];
-	lbSetValue [AIS_Dialog_CAS_SpawnPositionsComboBox, 0, 3500];
+	lbAdd [AIS_Dialog_Reinforcements_SpawnPositionsComboBox, "Nearest Patrolling Unit"];
+	lbSetValue [AIS_Dialog_Reinforcements_SpawnPositionsComboBox, 0, 3500];
 	{
-		lbAdd [AIS_Dialog_CAS_SpawnPositionsComboBox, format["%1", (_x select 0)]];
-		lbSetValue [AIS_Dialog_CAS_SpawnPositionsComboBox, _forEachIndex + 1, _x select 3];
+		lbAdd [AIS_Dialog_Reinforcements_SpawnPositionsComboBox, format["%1", (_x select 0)]];
+		lbSetValue [AIS_Dialog_Reinforcements_SpawnPositionsComboBox, _forEachIndex + 1, _x select 3];
 	} forEach _spawnPoints;
 
-	if(AIS_Dialog_CAS_SelectedUnit != _selectedUnitIndex) then {
-		AIS_Dialog_CAS_SelectedSpawnPoint = 0;
+	if(AIS_Dialog_Reinforcements_SelectedUnit != _selectedUnitIndex) then {
+		AIS_Dialog_Reinforcements_SelectedSpawnPoint = 0;
 	};
-	lbSetCurSel [AIS_Dialog_CAS_SpawnPositionsComboBox, AIS_Dialog_CAS_SelectedSpawnPoint];
+	lbSetCurSel [AIS_Dialog_Reinforcements_SpawnPositionsComboBox, AIS_Dialog_Reinforcements_SelectedSpawnPoint];
   
-	_textCbo = _display displayCtrl AIS_Dialog_CAS_UnitDescriptionText; 
+	_textCbo = _display displayCtrl AIS_Dialog_Reinforcements_UnitDescriptionText; 
 	
 	_color = "#ffffff";
 	if(_playerTabs < _cost) then {
-		ctrlEnable [AIS_Dialog_CAS_ConfirmButton, false];			
+		ctrlEnable [AIS_Dialog_Reinforcements_ConfirmButton, false];			
 		_color = "#FF0000";
 	};
 	_text = format["<t align='left' size='.75'>Cost:</t><t color='%2' align='right' size='.75'><img  size='0.50' image='addons\ais\icons\poptab_ca.paa'/> %1</t><br/>", _cost, _color];
 
 	_color = "#ffffff";
 	if(_playerRespect < _respect) then {				
-		ctrlEnable [AIS_Dialog_CAS_ConfirmButton, false];		
+		ctrlEnable [AIS_Dialog_Reinforcements_ConfirmButton, false];		
 		_color = "#FF0000";
 	};	
 	_text = format[_text + "<t align='left'size='.75'>Respect:</t><t color='%2' size='.75' align='right' size='.75'><img  size='0.50' image='addons\ais\icons\respect.paa'/> %1</t><br/>", _respect, _color];	    
@@ -116,7 +116,7 @@ AIS_Apps_CAS_SelectionChanged = {
 
 			_color = "#ffffff";
 			if!(_x call IsItemInInventory) then {	
-				ctrlEnable [AIS_Dialog_CAS_ConfirmButton, false];		
+				ctrlEnable [AIS_Dialog_Reinforcements_ConfirmButton, false];		
 				_color = "#FF0000";
 			};
 
@@ -133,6 +133,8 @@ AIS_Apps_CAS_SelectionChanged = {
  	
 	_textCbo ctrlSetStructuredText  parseText  _text;  
   
-   	AIS_Dialog_CAS_SelectedUnit = lbCurSel AIS_Dialog_CAS_UnitListBox;     
- 	[] call AIS_Apps_CAS_UpdateTotalCost; 
+   	AIS_Dialog_Reinforcements_SelectedUnit = lbCurSel AIS_Dialog_Reinforcements_UnitListBox;     
+	 [] call AIS_Apps_Reinforcements_UpdateTotalCost; 
+	 
+	 ctrlEnable [AIS_Dialog_Reinforcements_ConfirmButton, true];		
 };
